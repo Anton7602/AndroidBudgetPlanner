@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">BudgetPlanning</string>
+    <string name="button_test">Button</string>
+    <string name="intro_String">Hello World!</string>
+    <string name="InputElementToShoppingList">Введите название продукта</string>
+    <string name="addToListButton">Добавить в список</string>
+    <string name="ProductName">Наименование расхода:</string>
+    <string name="ProductCategory">Категория расхода:</string>
+    <string name="EditProductName">Введите имя продукта</string>
+    <string name="Quantity">Количество:</string>
+    <string name="EditQuantity">Введите количество продукта</string>
+    <string name="Cost">Стоимость:</string>
+    <string name="EditCost">Введите стоимость продукта:</string>
+    <string name="PaymentDate">Дата платежа:</string>
+    <string name="EditDate">Выберите дату</string>
+    <string name="GetTransactionDataButton">Получить данные о транзакциях</string>
+    <string name="btnToAddTransaction">Внесение расхода</string>
+    <string name="btnToShowShoppingList">Список покупок</string>
+    <string name="btnToShowTransactions">Просмотр транзакций</string>
+    <string name="dateFormat">dd/mm/yyyy</string>
+    <string name="From">По</string>
+    <string name="To">С</string>
+    <string name="toAnalyticsBtn">Аналитика</string>
+    <string name="submitTransaction">Внести транзакцию</string>
+    <string name="isProduct">Продукт</string>
+
+    <string-array name="categories">
+        <item>Еда обязательная</item>
+        <item>Еда необязательная</item>
+        <item>Личная гигиена</item>
+        <item>Транспорт</item>
+        <item>Товары для дома</item>
+        <item>Товары для души</item>
+        <item>Связь</item>
+        <item>Подарки</item>
+        <item>Одежда</item>
+        <item>Развлечения</item>
+        <item>Здоровье</item>
+        <item>Квартира</item>
+        <item>Образование</item>
+    </string-array>
+
+    <string-array name="filterCategories">
+        <item>Все</item>
+        <item>Еда обязательная</item>
+        <item>Еда необязательная</item>
+        <item>Личная гигиена</item>
+        <item>Транспорт</item>
+        <item>Товары для дома</item>
+        <item>Товары для души</item>
+        <item>Связь</item>
+        <item>Подарки</item>
+        <item>Одежда</item>
+        <item>Развлечения</item>
+        <item>Здоровье</item>
+        <item>Квартира</item>
+        <item>Образование</item>
+    </string-array>
+
+    <string-array name="typesOfQuantity">
+        <item>шт.</item>
+        <item>кг.</item>
+        <item>л.</item>
+    </string-array>
+
+    <string-array name="typesOfCurrency">
+        <item>₽</item>
+        <item>€</item>
+        <item>$</item>
+    </string-array>
+</resources>

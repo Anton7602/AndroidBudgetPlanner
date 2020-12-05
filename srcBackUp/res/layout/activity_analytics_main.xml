@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnalyticsMainActivity">
+
+    <TextView
+        android:id="@+id/showPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="150dp"
+        android:height="150dp"
+        android:background="@drawable/ui_design_textview_circle"
+        android:gravity="center"
+        android:text="00.00%"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/goodFoodRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/showPercentage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="94dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/badFoodRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showPercentage"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/sumOfGoodTransactionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#32CD32"
+        android:textSize="25sp"
+        android:text="0.00 ₽"
+        app:layout_constraintBottom_toTopOf="@+id/badFoodRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/showPercentage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
+
+    <TextView
+        android:id="@+id/sumOfBadTransactionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:textSize="25sp"
+        android:text="0.00 ₽"
+        app:layout_constraintBottom_toBottomOf="@+id/showPercentage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/showPercentage"
+        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
+
+    <ProgressBar
+        android:id="@+id/percentageCalculationBar"
+        style="?android:attr/progressBarStyle"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/showPercentage"
+        app:layout_constraintEnd_toEndOf="@+id/showPercentage"
+        app:layout_constraintStart_toStartOf="@+id/showPercentage"
+        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
+    tools:layout_editor_absoluteX="119dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
