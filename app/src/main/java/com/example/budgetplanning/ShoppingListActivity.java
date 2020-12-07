@@ -2,7 +2,9 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -118,7 +121,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void bindViews() {
     addDataButton = (Button) findViewById(R.id.addToListButton);
 	nameField = (EditText) findViewById(R.id.nameField);
-	shoppingData = (ListView) findViewById(R.id.mShoppingData);	
+	shoppingData = (ListView) findViewById(R.id.mShoppingData);
     }
 
     private void setUpListViews() {

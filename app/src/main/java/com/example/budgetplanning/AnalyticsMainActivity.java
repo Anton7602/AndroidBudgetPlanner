@@ -145,7 +145,7 @@ public class AnalyticsMainActivity extends AppCompatActivity {
             tempList = new ArrayList<Transaction>();
 		    for (Transaction transaction : toSortTransactionArray) {
 			    int transactionDay = Integer.parseInt(String.valueOf(transaction.getDate()).substring(6));
-			    if (transactionDay>=((7*numberOfWeeksInMonth)-6) && transactionDay<7*numberOfWeeksInMonth) {
+			    if (transactionDay>=((7*numberOfWeeksInMonth)-6) && transactionDay<=7*numberOfWeeksInMonth) {
 				    tempList.add(transaction);
 			    }
 		    }

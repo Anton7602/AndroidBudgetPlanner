@@ -26,7 +26,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics;
+    Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics, toProductConstructor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        toProductConstructor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProductConstructor();
+            }
+        });
+
 
     }
     public void openShoppingList() {
@@ -83,10 +90,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(openAnalytics);
     }
 
+    public void openProductConstructor() {
+        Intent openProductConstructor = new Intent(this, ProductConstructorActivity.class);
+        startActivity(openProductConstructor);
+    }
+
     public void bindViews() {
         toShoppingList = (Button) findViewById(R.id.toShoppingListBtn);
         toAddTransaction = (Button) findViewById(R.id.toAddTransactionBtn);
         toShowTransactions = (Button) findViewById(R.id.toShowTransactionsBtn);
         toAnalytics = (Button) findViewById(R.id.toAnalyticsBtn);
+        toProductConstructor = (Button) findViewById(R.id.toProductConstructorBtn);
     }
 }
