@@ -28,26 +28,30 @@
         android:id="@+id/goodFoodRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/showPercentage"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="94dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/badFoodRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showPercentage"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showPercentage" />
 
     <TextView
         android:id="@+id/sumOfGoodTransactionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#32CD32"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:text="0.00 ₽"
         app:layout_constraintBottom_toTopOf="@+id/badFoodRecyclerView"
         app:layout_constraintEnd_toStartOf="@+id/showPercentage"
@@ -59,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FF0000"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:text="0.00 ₽"
         app:layout_constraintBottom_toBottomOf="@+id/showPercentage"
         app:layout_constraintEnd_toEndOf="parent"

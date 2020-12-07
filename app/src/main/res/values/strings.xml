@@ -23,6 +23,7 @@
     <string name="toAnalyticsBtn">Аналитика</string>
     <string name="submitTransaction">Внести транзакцию</string>
     <string name="isProduct">Продукт</string>
+    <string name="toProductConstructorBtn">Новый продукт</string>
 
     <string-array name="categories">
         <item>Еда обязательная</item>
