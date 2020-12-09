@@ -6,8 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ShoppingListActivity">
 
+    <ProgressBar
+        android:id="@+id/ShL_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ShL_addToListButton" />
+
     <EditText
-        android:id="@+id/nameField"
+        android:id="@+id/ShL_nameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -16,16 +26,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addToListButton"
+        android:id="@+id/ShL_addToListButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/addToListButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameField" />
+        app:layout_constraintTop_toBottomOf="@+id/ShL_nameField" />
 
     <ListView
-        android:id="@+id/mShoppingData"
+        android:id="@+id/ShL_mShoppingData"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -33,7 +43,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addToListButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ShL_addToListButton" >
+
+    </ListView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

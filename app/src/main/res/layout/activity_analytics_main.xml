@@ -7,7 +7,7 @@
     tools:context=".AnalyticsMainActivity">
 
     <TextView
-        android:id="@+id/showPercentage"
+        android:id="@+id/AFB_showPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="150dp"
@@ -25,18 +25,18 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/goodFoodRecyclerView"
+        android:id="@+id/AFB_goodFoodRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/showPercentage"
+        app:layout_constraintBottom_toTopOf="@+id/AFB_showPercentage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/badFoodRecyclerView"
+        android:id="@+id/AFB_badFoodRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
@@ -44,42 +44,41 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showPercentage" />
+        app:layout_constraintTop_toBottomOf="@+id/AFB_showPercentage" />
 
     <TextView
-        android:id="@+id/sumOfGoodTransactionsTextView"
+        android:id="@+id/AFB_sumOfGoodTransactionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#32CD32"
         android:textSize="20sp"
         android:text="0.00 ₽"
-        app:layout_constraintBottom_toTopOf="@+id/badFoodRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/showPercentage"
+        app:layout_constraintBottom_toTopOf="@+id/AFB_badFoodRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/AFB_showPercentage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
+        app:layout_constraintTop_toTopOf="@+id/AFB_showPercentage" />
 
     <TextView
-        android:id="@+id/sumOfBadTransactionsTextView"
+        android:id="@+id/AFB_sumOfBadTransactionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FF0000"
         android:textSize="20sp"
         android:text="0.00 ₽"
-        app:layout_constraintBottom_toBottomOf="@+id/showPercentage"
+        app:layout_constraintBottom_toBottomOf="@+id/AFB_showPercentage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/showPercentage"
-        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
+        app:layout_constraintStart_toEndOf="@+id/AFB_showPercentage"
+        app:layout_constraintTop_toTopOf="@+id/AFB_showPercentage" />
 
     <ProgressBar
-        android:id="@+id/percentageCalculationBar"
+        android:id="@+id/AFB_percentageCalculationBar"
         style="?android:attr/progressBarStyle"
         android:visibility="visible"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/showPercentage"
-        app:layout_constraintEnd_toEndOf="@+id/showPercentage"
-        app:layout_constraintStart_toStartOf="@+id/showPercentage"
-        app:layout_constraintTop_toTopOf="@+id/showPercentage" />
-    tools:layout_editor_absoluteX="119dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/AFB_showPercentage"
+        app:layout_constraintEnd_toEndOf="@+id/AFB_showPercentage"
+        app:layout_constraintStart_toStartOf="@+id/AFB_showPercentage"
+        app:layout_constraintTop_toTopOf="@+id/AFB_showPercentage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

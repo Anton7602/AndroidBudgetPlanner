@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,9 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,20 +44,21 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
     private double sumOfTransactions=0;
     private int currentDay, currentMonth, currentYear;
     private DateQueryHelper dateHelper;
+    private ProgressBar loadingProgressBar;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	//Initializing Activity, setting up views, views parameters and databaseReference
+	    //Initializing Activity, setting up views, views parameters and databaseReference
         setContentView(R.layout.activity_query_transactions);
         bindViews();
-	setUpRecyclerViews();
-	setUpSpinners();
-	transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
+	    setUpRecyclerViews();
+	    setUpSpinners();
+	    transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
 
-	//Setting up date variables
+	    //Setting up date variables
         dateHelper = new DateQueryHelper();
         Calendar calendar = Calendar.getInstance();
         currentYear = calendar.get(Calendar.YEAR);
@@ -118,7 +118,8 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         showData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		//Define query range (Acceptable if dates in textviews are switched)
+                loadingProgressBar.setVisibility(View.VISIBLE);
+		        //Define query range (Acceptable if dates in textviews are switched)
                 int startDate = dateHelper.dateParseToDatabaseDate(dateFrom.getText().toString());
                 int endDate = dateHelper.dateParseToDatabaseDate(dateTo.getText().toString());
                 if (startDate>endDate) {
@@ -128,7 +129,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                     endDate = dateHelper.dateParseToDatabaseDate(dateTo.getText().toString());
                 }
 
-		//Run query and filter incoming transaction with chosen category
+		        //Run query and filter incoming transaction with chosen category
                 Query showTransactionsQuery = transactionDatabase.orderByChild("date").startAt(startDate).endAt(endDate);
                 showTransactionsQuery.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -150,6 +151,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                                 sumOfTransactions=sumOfTransactions+transaction.getCost();
                             }
                         }
+                        loadingProgressBar.setVisibility(View.GONE);
                         mAdapter.notifyDataSetChanged();
                         sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
                     }
@@ -175,12 +177,13 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
     }
 
     private void bindViews() {
-        dateTo = (TextView) findViewById(R.id.dateFromBtn);
-        dateFrom = (TextView) findViewById(R.id.dateToBtn);
-        sumOfTransactionsView = (TextView) findViewById(R.id.sumOfTransactionsTextView);
-        categoryFilterSpinner = (Spinner) findViewById(R.id.FilterCategorySpinner);
-        mRecycleView=(RecyclerView) findViewById(R.id.showTransactionRecyclerView);
-        showData = (Button) findViewById(R.id.showTransactionDataBtn);
+        dateTo = (TextView) findViewById(R.id.QTr_dateFromBtn);
+        dateFrom = (TextView) findViewById(R.id.QTr_dateToBtn);
+        sumOfTransactionsView = (TextView) findViewById(R.id.QTr_sumOfTransactionsTextView);
+        categoryFilterSpinner = (Spinner) findViewById(R.id.QTr_FilterCategorySpinner);
+        mRecycleView=(RecyclerView) findViewById(R.id.QTr_showTransactionRecyclerView);
+        showData = (Button) findViewById(R.id.QTr_showTransactionDataBtn);
+        loadingProgressBar = (ProgressBar) findViewById(R.id.QTr_progressBar);
     }
 
     private void setUpRecyclerViews() {

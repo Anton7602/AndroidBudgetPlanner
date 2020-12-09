@@ -12,21 +12,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class TransactionConstructorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
@@ -35,12 +39,16 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
     private TextView editDate, QuantityTextView;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     private Button submitTransaction;
-    private DatabaseReference mDatabase;
-    private EditText editName, editCost, editQuantity;
+    private DatabaseReference mDatabase, productDatabase;
+    private EditText editCost, editQuantity;
+    private AutoCompleteTextView editName;
     private SwitchCompat isProductSwitch;
     private int currentYear, currentMonth, currentDay;
     private DateQueryHelper dateHelper;
     private Boolean isProduct = true;
+    private ArrayList<Product> productList = new ArrayList<>();
+    private ArrayList<String> productNamesList = new ArrayList<>();
+    private ArrayList<String> productKeys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,46 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_transaction_constructor);
         bindViews();
 	    setUpSpinners();
+	    editName.requestFocus();
+	    productDatabase = FirebaseDatabase.getInstance().getReference().child("Продукты");
+	    productDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
+                    Product product = currentSnapshot.getValue(Product.class);
+                    productList.add(product);
+                    productNamesList.add(product.getName() +" " + product.getManufacturer());
+                    productKeys.add(currentSnapshot.getKey());
+                    setUpAutocompleteTextViews();
+                    editName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            ArrayList<String> categoriesArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories)));
+                            ArrayList<String> typesOfQuantityArray =new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.typesOfQuantity)));
+                            for (Product product : productList) {
+                                if (parent.getItemAtPosition(position).equals(product.getName()+" "+ product.getManufacturer())) {
+                                    category.setSelection(categoriesArray.indexOf(product.getDefaultCategory()));
+                                    typeOfQuantity.setSelection(typesOfQuantityArray.indexOf(product.getDefaultQuantityType()));
+                                    editQuantity.requestFocus();
+                                    if (product.getDefaultQuantity()!=0) {
+                                        editQuantity.setText(String.valueOf(product.getDefaultQuantity()));
+                                        editCost.requestFocus();
+                                    }
+                                    else {
+                                        editQuantity.setText("");
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         final Intent intent = getIntent();
         try
@@ -104,7 +152,7 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
                                         typeOfCurrency.getSelectedItem().toString(),
                                         Double.parseDouble(editCost.getText().toString()),
                                         dateHelper.dateParseToDatabaseDate(editDate.getText().toString()),
-                                        isProduct);
+                                        !isProduct);
                             }
                             else
                             {
@@ -119,7 +167,8 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
                                     dateHelper.dateParseToDatabaseDate(editDate.getText().toString()),
                                     !isProduct);
                         }
-                        mDatabase.push().setValue(transaction).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        DatabaseReference pushKey = mDatabase.push();
+                        pushKey.setValue(transaction).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getApplicationContext(), "Транзакция успешно внесена базу", Toast.LENGTH_LONG).show();
@@ -127,9 +176,17 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Не удалось внести транзакицю в базу", Toast.LENGTH_LONG);
+                                Toast.makeText(getApplicationContext(), "Не удалось внести транзакицю в базу", Toast.LENGTH_LONG).show();
                             }
                         });
+                        for (Product product : productList) {
+                            if (editName.getText().toString().equals(product.getName()+" " + product.getManufacturer())) {
+                                product.addAssociatedTransactionKey(pushKey.getKey());
+                                DatabaseReference tempRef = FirebaseDatabase.getInstance().getReference().child("Продукты").child(productKeys.get(productList.indexOf(product)));
+                                tempRef.removeValue();
+                                tempRef.setValue(product);
+                            }
+                        }
                         editName.setText("");
                         editCost.setText("");
                         editQuantity.setText("");
@@ -164,17 +221,22 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
     }
 
     private void bindViews() {
-        category = (Spinner) findViewById(R.id.categorySpinner);
-        typeOfQuantity = (Spinner) findViewById(R.id.typeOfQuantitySpinner);
-        typeOfCurrency = (Spinner) findViewById(R.id.typeOfCurrencySpinner);
-        editName=(EditText) findViewById(R.id.productName);
-        editCost=(EditText) findViewById(R.id.productCost);
-        editQuantity=(EditText) findViewById(R.id.productQuantity);
-        editDate = (TextView) findViewById(R.id.transactionDate);
-        submitTransaction = (Button) findViewById(R.id.submitTransaction);
-        isProductSwitch = (SwitchCompat) findViewById(R.id.isProductSwitch);
-        QuantityTextView = (TextView) findViewById(R.id.quantityTextView);
+        category = (Spinner) findViewById(R.id.TrC_categorySpinner);
+        typeOfQuantity = (Spinner) findViewById(R.id.TrC_typeOfQuantitySpinner);
+        typeOfCurrency = (Spinner) findViewById(R.id.TrC_typeOfCurrencySpinner);
+        editName=(AutoCompleteTextView) findViewById(R.id.TrC_productName);
+        editCost=(EditText) findViewById(R.id.TrC_productCost);
+        editQuantity=(EditText) findViewById(R.id.TrC_productQuantity);
+        editDate = (TextView) findViewById(R.id.TrC_transactionDate);
+        submitTransaction = (Button) findViewById(R.id.TrC_submitTransaction);
+        isProductSwitch = (SwitchCompat) findViewById(R.id.TrC_isProductSwitch);
+        QuantityTextView = (TextView) findViewById(R.id.TrC_quantityTextView);
 
+    }
+
+    private void setUpAutocompleteTextViews () {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, productNamesList);
+        editName.setAdapter(adapter);
     }
 
     private void setUpSpinners() {
@@ -194,20 +256,21 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        isProduct = (!isProduct);
         if (isProduct) {
-            isProductSwitch.setText("Продукт");
-            editName.setHint("Введите имя продукта");
-            QuantityTextView.setVisibility(View.VISIBLE);
-            editQuantity.setVisibility(View.VISIBLE);
-            typeOfQuantity.setVisibility(View.VISIBLE);
-        }
-        else {
+            isProduct = false;
             isProductSwitch.setText("Услуга");
             editName.setHint("Введите имя услуги");
             QuantityTextView.setVisibility(View.GONE);
             editQuantity.setVisibility(View.GONE);
             typeOfQuantity.setVisibility(View.GONE);
+        }
+        else {
+            isProduct = true;
+            isProductSwitch.setText("Продукт");
+            editName.setHint("Введите имя продукта");
+            QuantityTextView.setVisibility(View.VISIBLE);
+            editQuantity.setVisibility(View.VISIBLE);
+            typeOfQuantity.setVisibility(View.VISIBLE);
         }
     }
 }

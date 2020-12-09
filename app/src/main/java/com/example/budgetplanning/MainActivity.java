@@ -9,20 +9,7 @@ import android.widget.Button;
 
 
 //Main activity is a navigation main menu to the rest of th application
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bindViews() {
-        toShoppingList = (Button) findViewById(R.id.toShoppingListBtn);
-        toAddTransaction = (Button) findViewById(R.id.toAddTransactionBtn);
-        toShowTransactions = (Button) findViewById(R.id.toShowTransactionsBtn);
-        toAnalytics = (Button) findViewById(R.id.toAnalyticsBtn);
-        toProductConstructor = (Button) findViewById(R.id.toProductConstructorBtn);
+        toShoppingList = (Button) findViewById(R.id.MM_toShoppingListBtn);
+        toAddTransaction = (Button) findViewById(R.id.MM_toAddTransactionBtn);
+        toShowTransactions = (Button) findViewById(R.id.MM_toShowTransactionsBtn);
+        toAnalytics = (Button) findViewById(R.id.MM_toAnalyticsBtn);
+        toProductConstructor = (Button) findViewById(R.id.MM_toProductConstructorBtn);
     }
 }

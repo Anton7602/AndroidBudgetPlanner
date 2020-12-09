@@ -24,6 +24,10 @@
     <string name="submitTransaction">Внести транзакцию</string>
     <string name="isProduct">Продукт</string>
     <string name="toProductConstructorBtn">Новый продукт</string>
+    <string name="product_bar_code">Штрихкод продукта:</string>
+    <string name="productCategoryTextView">Категория продукта:</string>
+    <string name="productNameTextView">Введите имя продукта</string>
+    <string name="submit_product_to_database">Внести продукт в базу</string>
 
     <string-array name="categories">
         <item>Еда обязательная</item>

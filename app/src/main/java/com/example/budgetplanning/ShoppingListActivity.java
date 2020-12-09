@@ -2,9 +2,7 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +35,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private ArrayList<String> mShoppingList = new ArrayList<>();
     private ArrayList<String> mShoppingKey = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
+    private ProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
                 String key = snapshot.getKey();
                 mShoppingKey.add(key);
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -119,9 +119,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-    addDataButton = (Button) findViewById(R.id.addToListButton);
-	nameField = (EditText) findViewById(R.id.nameField);
-	shoppingData = (ListView) findViewById(R.id.mShoppingData);
+    addDataButton = (Button) findViewById(R.id.ShL_addToListButton);
+	nameField = (EditText) findViewById(R.id.ShL_nameField);
+	shoppingData = (ListView) findViewById(R.id.ShL_mShoppingData);
+	loadingProgressBar = (ProgressBar) findViewById(R.id.ShL_progressBar);
     }
 
     private void setUpListViews() {

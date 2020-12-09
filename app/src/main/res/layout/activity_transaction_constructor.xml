@@ -7,7 +7,7 @@
     tools:context=".TransactionConstructorActivity">
 
     <Spinner
-        android:id="@+id/categorySpinner"
+        android:id="@+id/TrC_categorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -15,10 +15,10 @@
         android:soundEffectsEnabled="false"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/TrC_textView2" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/TrC_textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,122 +29,123 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/TrC_textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="@string/ProductName"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_textView2"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_categorySpinner" />
 
-    <EditText
-        android:id="@+id/productName"
+    <AutoCompleteTextView
+        android:id="@+id/TrC_productName"
+        android:completionThreshold="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/EditProductName"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_textView3"
         tools:layout_editor_absoluteX="140dp" />
 
     <TextView
-        android:id="@+id/quantityTextView"
+        android:id="@+id/TrC_quantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/Quantity"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/productName" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_textView3"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productName" />
 
     <EditText
-        android:id="@+id/productQuantity"
+        android:id="@+id/TrC_productQuantity"
         android:layout_width="300sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:inputType="numberDecimal"
         android:hint="@string/EditQuantity"
-        app:layout_constraintStart_toStartOf="@+id/productName"
-        app:layout_constraintTop_toBottomOf="@+id/quantityTextView" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_productName"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_quantityTextView" />
 
     <Spinner
-        android:id="@+id/typeOfQuantitySpinner"
+        android:id="@+id/TrC_typeOfQuantitySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/productQuantity"
+        app:layout_constraintBottom_toBottomOf="@+id/TrC_productQuantity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/productQuantity"
-        app:layout_constraintTop_toTopOf="@+id/productQuantity" />
+        app:layout_constraintStart_toEndOf="@+id/TrC_productQuantity"
+        app:layout_constraintTop_toTopOf="@+id/TrC_productQuantity" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/TrC_textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:text="@string/Cost"
-        app:layout_constraintStart_toStartOf="@+id/quantityTextView"
-        app:layout_constraintTop_toBottomOf="@+id/productQuantity" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_quantityTextView"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productQuantity" />
 
     <EditText
-        android:id="@+id/productCost"
+        android:id="@+id/TrC_productCost"
         android:layout_width="300sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/EditCost"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="@+id/productQuantity"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_productQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_textView8" />
 
     <Spinner
-        android:id="@+id/typeOfCurrencySpinner"
+        android:id="@+id/TrC_typeOfCurrencySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/productCost"
+        app:layout_constraintBottom_toBottomOf="@+id/TrC_productCost"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/productCost"
-        app:layout_constraintTop_toTopOf="@+id/productCost" />
+        app:layout_constraintStart_toEndOf="@+id/TrC_productCost"
+        app:layout_constraintTop_toTopOf="@+id/TrC_productCost" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/TrC_textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:text="@string/PaymentDate"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/productCost" />
+        app:layout_constraintStart_toStartOf="@+id/TrC_textView8"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productCost" />
 
     <TextView
-        android:id="@+id/transactionDate"
+        android:id="@+id/TrC_transactionDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/EditDate"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintStart_toEndOf="@+id/TrC_textView10"
+        app:layout_constraintTop_toTopOf="@+id/TrC_textView10" />
 
     <Button
-        android:id="@+id/submitTransaction"
+        android:id="@+id/TrC_submitTransaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/submitTransaction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/TrC_textView10" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/isProductSwitch"
+        android:id="@+id/TrC_isProductSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#808080"
         android:text="@string/isProduct"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+        app:layout_constraintBottom_toTopOf="@+id/TrC_textView3"
+        app:layout_constraintStart_toStartOf="@+id/TrC_textView3"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_categorySpinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

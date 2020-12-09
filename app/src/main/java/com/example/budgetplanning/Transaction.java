@@ -9,7 +9,7 @@ public class Transaction {
     private double quantity;
     private String typeOfCurrency;
     private double cost;
-    private boolean service=false;
+    private boolean service;
 
     int date;
 
@@ -114,6 +114,6 @@ public class Transaction {
     }
 
     public void setIsService(boolean service) {
-        service = service;
+        this.service = service;
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".ProductConstructorActivity">
 
     <SurfaceView
-        android:id="@+id/BarCodeSurfaceView"
+        android:id="@+id/PrC_BarCodeSurfaceView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
@@ -15,16 +15,108 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/barCodeOutputView"
+    <EditText
+        android:id="@+id/PrC_barCodeOutputView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintTop_toBottomOf="@id/BarCodeSurfaceView"
-        android:layout_marginTop="50dp"
-        android:text="Barcode Text"
-        android:textSize="25sp"
-        android:padding="5dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
+        android:hint="Введите штрихкод"
+        android:padding="5dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_barCodeTextView" />
+
+    <Spinner
+        android:id="@+id/PrC_productCategorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_productCategoryTextView" />
+
+    <EditText
+        android:id="@+id/PrC_manufacturerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Производитель продукта"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/PrC_setProductNameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_setProductNameEditText" />
+
+    <EditText
+        android:id="@+id/PrC_productQuantityEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
+        android:inputType="numberDecimal"
+        android:hint="Введите количество"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_manufacturerTextView" />
+
+    <Spinner
+        android:id="@+id/PrC_quantityTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/PrC_productQuantityEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PrC_productQuantityEditText"
+        app:layout_constraintTop_toTopOf="@+id/PrC_productQuantityEditText" />
+
+    <Button
+        android:id="@+id/PrC_acceptCurrentBarCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGreenBalance"
+        app:layout_constraintBottom_toBottomOf="@+id/PrC_barCodeOutputView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PrC_barCodeOutputView"
+        app:layout_constraintTop_toTopOf="@+id/PrC_barCodeOutputView" />
+
+    <TextView
+        android:id="@+id/PrC_barCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/product_bar_code"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_BarCodeSurfaceView" />
+
+    <TextView
+        android:id="@+id/PrC_productCategoryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="@string/productCategoryTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_barCodeOutputView" />
+
+    <EditText
+        android:id="@+id/PrC_setProductNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:hint="@string/productNameTextView"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/PrC_productCategoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_productCategorySpinner" />
+
+    <Button
+        android:id="@+id/PrC_submitProductToDatabaseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_product_to_database"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrC_productQuantityEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

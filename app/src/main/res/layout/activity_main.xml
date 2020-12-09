@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/toAddTransactionBtn"
+        android:id="@+id/MM_toAddTransactionBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/toShoppingListBtn"
+        android:id="@+id/MM_toShoppingListBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -26,29 +26,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toAnalyticsBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/MM_toAnalyticsBtn" />
 
     <Button
-        android:id="@+id/toShowTransactionsBtn"
+        android:id="@+id/MM_toShowTransactionsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/btnToShowTransactions"
-        app:layout_constraintTop_toBottomOf="@+id/toAddTransactionBtn"
+        app:layout_constraintTop_toBottomOf="@+id/MM_toAddTransactionBtn"
         tools:layout_editor_absoluteX="107dp" />
 
     <Button
-        android:id="@+id/toAnalyticsBtn"
+        android:id="@+id/MM_toAnalyticsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/toAnalyticsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toShowTransactionsBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/MM_toShowTransactionsBtn" />
 
     <Button
-        android:id="@+id/toProductConstructorBtn"
+        android:id="@+id/MM_toProductConstructorBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

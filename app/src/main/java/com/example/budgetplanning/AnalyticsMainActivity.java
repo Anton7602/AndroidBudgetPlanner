@@ -2,23 +2,12 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,8 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -110,12 +97,12 @@ public class AnalyticsMainActivity extends AppCompatActivity {
 
     //Binding views from layout to class variables
     private void bindViews() {
-        showPercentage = (TextView) findViewById(R.id.showPercentage);
-        sumOfBadTransactionsTextView = (TextView) findViewById(R.id.sumOfBadTransactionsTextView);
-        sumOfGoodTransactionsTextView = (TextView) findViewById(R.id.sumOfGoodTransactionsTextView);
-        showGoodFoodTransaction = (RecyclerView) findViewById(R.id.goodFoodRecyclerView);
-        showBadFoodTransaction = (RecyclerView) findViewById(R.id.badFoodRecyclerView);
-        percentageCalculationPercentageBar = (ProgressBar) findViewById(R.id.percentageCalculationBar);
+        showPercentage = (TextView) findViewById(R.id.AFB_showPercentage);
+        sumOfBadTransactionsTextView = (TextView) findViewById(R.id.AFB_sumOfBadTransactionsTextView);
+        sumOfGoodTransactionsTextView = (TextView) findViewById(R.id.AFB_sumOfGoodTransactionsTextView);
+        showGoodFoodTransaction = (RecyclerView) findViewById(R.id.AFB_goodFoodRecyclerView);
+        showBadFoodTransaction = (RecyclerView) findViewById(R.id.AFB_badFoodRecyclerView);
+        percentageCalculationPercentageBar = (ProgressBar) findViewById(R.id.AFB_percentageCalculationBar);
 
     }
 
