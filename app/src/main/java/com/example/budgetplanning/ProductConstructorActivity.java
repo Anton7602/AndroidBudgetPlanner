@@ -68,6 +68,9 @@ public class ProductConstructorActivity extends AppCompatActivity implements Ada
                 if (productQuantityEditText.getText().toString().length() <1) {
                     productQuantityEditText.setText("0");
                 }
+                if (productManufacturer.getText().toString().length() < 1) {
+                    productManufacturer.setText(" ");
+                }
                 if (productNameEditText.getText().length()>2) {
                     final Query checkProductRepeatQuery = productDatabase.orderByChild("name").equalTo(productNameEditText.getText().toString().substring(0,1).toUpperCase()+productNameEditText.getText().toString().substring(1).toLowerCase());
                     repetativityChecker = new ValueEventListener() {
