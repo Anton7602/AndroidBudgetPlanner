@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -15,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,7 +43,8 @@ public class ProductConstructorActivity extends AppCompatActivity implements Ada
     private EditText barCodeOutputTextView, productNameEditText, productQuantityEditText, productManufacturer;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    private Button acceptCurrentBarCodeBtn, submitProductToDatabaseBtn;
+    private Button submitProductToDatabaseBtn;
+    private ImageButton  acceptCurrentBarCodeBtn;
     private Spinner productCategories, productQuantitiesTypes;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     private DatabaseReference productDatabase;
@@ -52,6 +57,14 @@ public class ProductConstructorActivity extends AppCompatActivity implements Ada
         bindViews();
         setUpSpinners();
         initializeDetectorsAndSources();
+        final Intent intent = getIntent();
+        try
+        {
+            if (intent.getStringExtra(ShoppingListActivity.EXTRA_PRODUCT_NAME).length()>1)
+            {
+                productNameEditText.setText(intent.getStringExtra(ShoppingListActivity.EXTRA_PRODUCT_NAME));
+            }
+        } catch (Exception e) {}
         productDatabase = FirebaseDatabase.getInstance().getReference().child("Продукты");
         acceptCurrentBarCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +150,7 @@ public class ProductConstructorActivity extends AppCompatActivity implements Ada
     private void bindViews() {
         barCodeOutputTextView = (EditText) findViewById(R.id.PrC_barCodeOutputView);
         barCodeCameraView = (SurfaceView) findViewById(R.id.PrC_BarCodeSurfaceView);
-        acceptCurrentBarCodeBtn = (Button) findViewById(R.id.PrC_acceptCurrentBarCode);
+        acceptCurrentBarCodeBtn = (ImageButton) findViewById(R.id.PrC_acceptCurrentBarCode);
         submitProductToDatabaseBtn = (Button) findViewById(R.id.PrC_submitProductToDatabaseBtn);
         productCategories = (Spinner) findViewById(R.id.PrC_productCategorySpinner);
         productQuantitiesTypes = (Spinner) findViewById(R.id.PrC_quantityTypeSpinner);
@@ -208,6 +221,10 @@ public class ProductConstructorActivity extends AppCompatActivity implements Ada
                                 acceptCurrentBarCodeBtn.setEnabled(true);
                             }
                             else {
+                                if (!barcodes.valueAt(0).displayValue.equals(barCodeOutputTextView.getText().toString())) {
+                                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                                    v.vibrate(500);
+                                }
                                 barCodeOutputTextView.setText(barcodes.valueAt(0).displayValue);
                                 acceptCurrentBarCodeBtn.setEnabled(true);
                             }

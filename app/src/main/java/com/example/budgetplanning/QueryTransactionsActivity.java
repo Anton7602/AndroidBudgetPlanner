@@ -72,7 +72,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(QueryTransactionsActivity.this,
-                        android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth,
+                        android.R.style.Theme_Holo_Light_Dialog,
                         setDateTo,
                         currentYear,currentMonth,currentDay);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -85,7 +85,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(QueryTransactionsActivity.this,
-                        android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth,
+                        android.R.style.Theme_Holo_Light_Dialog,
                         setDateFrom,
                         currentYear,currentMonth,currentDay);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

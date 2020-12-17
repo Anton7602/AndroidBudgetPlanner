@@ -6,20 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ShoppingListActivity">
 
-    <ProgressBar
-        android:id="@+id/ShL_progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ShL_addToListButton" />
-
     <EditText
         android:id="@+id/ShL_nameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHighlight="@android:color/transparent"
         android:layout_marginTop="16dp"
         android:hint="@string/InputElementToShoppingList"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +37,17 @@
         app:layout_constraintTop_toBottomOf="@+id/ShL_addToListButton" >
 
     </ListView>
+
+    <ProgressBar
+        android:id="@+id/ShL_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

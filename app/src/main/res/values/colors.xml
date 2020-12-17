@@ -5,4 +5,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGreenBalance">#0f0</color>
     <color name="colorRedBalance">#f00</color>
+    <color name="applicationBackground">#e3d9c5</color>
 </resources>

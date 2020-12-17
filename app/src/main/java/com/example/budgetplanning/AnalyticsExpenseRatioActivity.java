@@ -2,11 +2,14 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,6 +41,7 @@ import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 
@@ -48,9 +52,12 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
     private ProgressBar pieChartDataLoadingProgressBar;
     private TextView pieChartInfo;
     private NumberPicker yearPicker, monthPicker;
+    private RecyclerView transactionsRecyclerView;
     private DatabaseReference transactionDatabase;
     private int currentYear, currentMonth, currentDay;
     private ArrayList<Float> categoriesValuesArray;
+    private ArrayList<String> categoriesArray;
+    private ArrayList<Transaction> transactionsList;
     private Double pieChartSum;
 
     @Override
@@ -61,65 +68,102 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
         bindViews();
 
         //Setting up date variables
-        DateQueryHelper dateHelper = new DateQueryHelper();
-        Calendar calendar = Calendar.getInstance();
+        final DateQueryHelper dateHelper = new DateQueryHelper();
+        final Calendar calendar = Calendar.getInstance();
         currentYear = calendar.get(Calendar.YEAR);
         currentMonth = calendar.get(Calendar.MONTH)+1;
         currentDay = calendar.get(Calendar.DAY_OF_MONTH);
         datePickerSetup();
 
-        final ArrayList<String> categoriesArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories)));
-        categoriesValuesArray = new ArrayList<Float>();
-        for (int i =0; i<categoriesArray.size();i++ ) {
-            categoriesValuesArray.add(0.0f);
-        }
+        categoriesArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories)));
+
         int startDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth,1);
         int endDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth, currentDay);
-
         transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
-        Query showTransactionsQuery = transactionDatabase.orderByChild("date").startAt(startDate).endAt(endDate);
+        getDataFromDatabase(startDate, endDate);
 
-        //Run query, sort transaction by nessecary food/unnessecary food categories
+
+        monthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                pieChartDataLoadingProgressBar.setVisibility(View.VISIBLE);
+                currentMonth=newVal+1;
+                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth, currentDay);
+                int maxDayInMonth = newCalendar.getActualMaximum(calendar.DAY_OF_MONTH);
+                int newStartDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth,1);
+                int newEndDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth, maxDayInMonth);
+                getDataFromDatabase(newStartDate, newEndDate);
+            }
+        });
+
+        yearPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                pieChartDataLoadingProgressBar.setVisibility(View.VISIBLE);
+                currentYear = newVal;
+                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth, currentDay);
+                int maxDayInMonth = newCalendar.getActualMaximum(calendar.DAY_OF_MONTH);
+                int newStartDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth,1);
+                int newEndDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth, maxDayInMonth);
+                getDataFromDatabase(newStartDate, newEndDate);
+            }
+        });
+    }
+
+    private void getDataFromDatabase(int startDate, int endDate) {
+        Query showTransactionsQuery = transactionDatabase.orderByChild("date").startAt(startDate).endAt(endDate);
         showTransactionsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 expensesRatePieChartConfig = new AnimatedPieViewConfig();
+                transactionsList = new ArrayList<>();
+                categoriesValuesArray = new ArrayList<Float>();
+                for (int i =0; i<categoriesArray.size();i++ ) {
+                    categoriesValuesArray.add(0.0f);
+                }
                 pieChartSum=0.0;
                 for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
                     Transaction transaction = currentSnapshot.getValue(Transaction.class);
+                    transactionsList.add(transaction);
                     categoriesValuesArray.set(categoriesArray.indexOf(transaction.getCategory()), categoriesValuesArray.get(categoriesArray.indexOf(transaction.getCategory()))+(float) transaction.getCost());
                 }
                 Random colorRandomizer = new Random();
                 for (String category : categoriesArray) {
                     if (categoriesValuesArray.get(categoriesArray.indexOf(category))>0) {
                         expensesRatePieChartConfig.addData(new SimplePieInfo(categoriesValuesArray.get(categoriesArray.indexOf(category)),
-                                                                            Color.rgb(colorRandomizer.nextInt(254),colorRandomizer.nextInt(254),colorRandomizer.nextInt(254)),
-                                                                            category));
+                                Color.rgb(colorRandomizer.nextInt(154),colorRandomizer.nextInt(254),colorRandomizer.nextInt(204)),
+                                category));
                         pieChartSum=pieChartSum+categoriesValuesArray.get(categoriesArray.indexOf(category));
                     }
                 }
-                setUpPieChartConfig();
                 pieChartDataLoadingProgressBar.setVisibility(View.GONE);
-                pieChartInfo.setText("100%"+ System.lineSeparator()+String.format("%,.2f", pieChartSum)+"₽");
+                pieChartInfo.setTextColor(Color.BLACK);
+                setUpPieChartConfig();
                 expensesRatePieChart.start(expensesRatePieChartConfig);
+                setUpRecyclerView(transactionsList);
+                if (pieChartSum>0) {
+                    pieChartInfo.setText("100%" + System.lineSeparator() + String.format("%,.2f", pieChartSum) + "₽");
+                }
+                else {
+                    pieChartInfo.setText("Нет данных за"+System.lineSeparator()+"указанный период");
+                }
                 pieChartInfo.setVisibility(View.VISIBLE);
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
     }
 
     private void bindViews() {
-        expensesRatePieChart = findViewById(R.id.AER_ExpensesRatioPieChart);
-        pieChartDataLoadingProgressBar = findViewById(R.id.AER_pieChartDataLoadingProgressBar);
+        expensesRatePieChart = (AnimatedPieView) findViewById(R.id.AER_ExpensesRatioPieChart);
+        pieChartDataLoadingProgressBar = (ProgressBar) findViewById(R.id.AER_pieChartDataLoadingProgressBar);
         pieChartInfo = (TextView) findViewById(R.id.AER_pieChartInfoTextView);
         yearPicker = (NumberPicker) findViewById(R.id.AER_yearPicker);
         monthPicker = (NumberPicker) findViewById(R.id.AER_monthPicker);
+        transactionsRecyclerView = (RecyclerView) findViewById(R.id.AER_transactionList);
     }
 
     private void datePickerSetup() {
@@ -130,12 +174,20 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
         monthPicker.setMinValue(0);
         monthPicker.setMaxValue(months.length-1);
         monthPicker.setDisplayedValues(months);
+        monthPicker.setValue(currentMonth-1);
+    }
+
+    private void setUpRecyclerView(ArrayList<Transaction> transactionsForRecyclerView) {
+        transactionsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        TransactionAdapter adapter = new TransactionAdapter(transactionsForRecyclerView);
+        transactionsRecyclerView.setLayoutManager(layoutManager);
+        transactionsRecyclerView.setAdapter(adapter);
     }
 
     private void setUpPieChartConfig () {
         expensesRatePieChartConfig.startAngle(90);
         expensesRatePieChartConfig.duration(2000);
-        expensesRatePieChartConfig.textSize(20);
         expensesRatePieChartConfig.drawText(true);
         expensesRatePieChartConfig.selectListener(new OnPieSelectListener<IPieInfo>() {
             @Override
@@ -144,10 +196,18 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
                     Double percentage = (pieInfo.getValue() / pieChartSum) * 100;
                     pieChartInfo.setText(String.format("%,.2f", percentage)+"%"+System.lineSeparator()+String.format("%,.2f", pieInfo.getValue())+"₽");
                     pieChartInfo.setTextColor(pieInfo.getColor());
+                    ArrayList<Transaction> tempTransactionList = new ArrayList<>();
+                    for (Transaction transaction : transactionsList) {
+                        if (transaction.getCategory().equals(pieInfo.getDesc())) {
+                            tempTransactionList.add(transaction);
+                        }
+                    }
+                    setUpRecyclerView(tempTransactionList);
                 }
                 else {
                     pieChartInfo.setTextColor(Color.BLACK);
                     pieChartInfo.setText("100%"+ System.lineSeparator()+String.format("%,.2f", pieChartSum)+"₽");
+                    setUpRecyclerView(transactionsList);
                 }
             }
         });

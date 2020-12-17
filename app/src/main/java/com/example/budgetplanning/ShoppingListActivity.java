@@ -2,9 +2,13 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -114,6 +118,35 @@ public class ShoppingListActivity extends AppCompatActivity {
                 Intent startTransactionConstructorInt = new Intent(getApplicationContext(), TransactionConstructorActivity.class);
                 startTransactionConstructorInt.putExtra(EXTRA_PRODUCT_NAME, deletingItem);
                 startActivity(startTransactionConstructorInt);
+            }
+        });
+
+        shoppingData.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder editShoppingListDialog = new AlertDialog.Builder(ShoppingListActivity.this);
+                editShoppingListDialog.setTitle("Редактировать элемент списка");
+                final int currentPos = position;
+                final EditText shoppingListItem = new EditText(ShoppingListActivity.this);
+                editShoppingListDialog.setView(shoppingListItem);
+                shoppingListItem.setText(mShoppingList.get(position));
+                editShoppingListDialog.setPositiveButton("Подтвердить значение", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatabase.child(mShoppingKey.get(currentPos)).setValue(shoppingListItem.getText().toString());
+                    }
+                });
+                editShoppingListDialog.setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatabase.child(mShoppingKey.get(currentPos)).removeValue();
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = editShoppingListDialog.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.applicationBackground)));
+                dialog.show();
+                return true;
             }
         });
     }

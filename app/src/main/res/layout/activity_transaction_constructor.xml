@@ -8,10 +8,11 @@
 
     <Spinner
         android:id="@+id/TrC_categorySpinner"
+        android:popupBackground="@color/applicationBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:background="@color/applicationBackground"
         android:soundEffectsEnabled="false"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,13 +41,14 @@
 
     <AutoCompleteTextView
         android:id="@+id/TrC_productName"
-        android:completionThreshold="1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:completionThreshold="1"
         android:hint="@string/EditProductName"
-        app:layout_constraintTop_toBottomOf="@+id/TrC_textView3"
-        tools:layout_editor_absoluteX="140dp" />
+        app:layout_constraintEnd_toStartOf="@+id/TrC_toProductConstructorBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrC_textView3" />
 
     <TextView
         android:id="@+id/TrC_quantityTextView"
@@ -72,6 +74,7 @@
         android:id="@+id/TrC_typeOfQuantitySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
         app:layout_constraintBottom_toBottomOf="@+id/TrC_productQuantity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/TrC_productQuantity"
@@ -101,6 +104,7 @@
         android:id="@+id/TrC_typeOfCurrencySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
         app:layout_constraintBottom_toBottomOf="@+id/TrC_productCost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/TrC_productCost"
@@ -146,6 +150,16 @@
         app:layout_constraintBottom_toTopOf="@+id/TrC_textView3"
         app:layout_constraintStart_toStartOf="@+id/TrC_textView3"
         app:layout_constraintTop_toBottomOf="@+id/TrC_categorySpinner" />
+
+    <ImageButton
+        android:id="@+id/TrC_toProductConstructorBtn"
+        android:background="@color/applicationBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/TrC_productName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TrC_productName"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

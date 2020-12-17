@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +35,13 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 public class TransactionConstructorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+    final static public String EXTRA_PRODUCT_NAME = "ProductName";
 
     private Spinner category, typeOfQuantity, typeOfCurrency;
     private TextView editDate, QuantityTextView;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     private Button submitTransaction;
+    private ImageButton toProductConstructor;
     private DatabaseReference mDatabase, productDatabase;
     private EditText editCost, editQuantity;
     private AutoCompleteTextView editName;
@@ -116,7 +119,7 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(TransactionConstructorActivity.this,
-                        android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth,
+                        android.R.style.Theme_Holo_Light_Dialog,
                         mOnDateSetListener,
                         currentYear,currentMonth,currentDay);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -207,8 +210,12 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
                 }
             }
         });
-
-
+        toProductConstructor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProductConstructor();
+            }
+        });
     }
 
     @Override
@@ -231,7 +238,13 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
         submitTransaction = (Button) findViewById(R.id.TrC_submitTransaction);
         isProductSwitch = (SwitchCompat) findViewById(R.id.TrC_isProductSwitch);
         QuantityTextView = (TextView) findViewById(R.id.TrC_quantityTextView);
+        toProductConstructor = (ImageButton) findViewById(R.id.TrC_toProductConstructorBtn);
+    }
 
+    private void openProductConstructor() {
+        Intent openProductConstructor = new Intent(this, ProductConstructorActivity.class);
+        openProductConstructor.putExtra(EXTRA_PRODUCT_NAME, editName.getText().toString());
+        startActivity(openProductConstructor);
     }
 
     private void setUpAutocompleteTextViews () {
@@ -263,6 +276,7 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
             QuantityTextView.setVisibility(View.GONE);
             editQuantity.setVisibility(View.GONE);
             typeOfQuantity.setVisibility(View.GONE);
+            toProductConstructor.setVisibility(View.GONE);
         }
         else {
             isProduct = true;
@@ -271,6 +285,7 @@ public class TransactionConstructorActivity extends AppCompatActivity implements
             QuantityTextView.setVisibility(View.VISIBLE);
             editQuantity.setVisibility(View.VISIBLE);
             typeOfQuantity.setVisibility(View.VISIBLE);
+            toProductConstructor.setVisibility(View.VISIBLE);
         }
     }
 }

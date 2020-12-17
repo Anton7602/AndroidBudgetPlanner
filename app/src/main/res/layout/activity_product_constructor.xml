@@ -10,7 +10,6 @@
         android:id="@+id/PrC_BarCodeSurfaceView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +31,7 @@
         android:id="@+id/PrC_productCategorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PrC_productCategoryTextView" />
@@ -62,16 +62,18 @@
         android:id="@+id/PrC_quantityTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
         app:layout_constraintBottom_toBottomOf="@+id/PrC_productQuantityEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/PrC_productQuantityEditText"
         app:layout_constraintTop_toTopOf="@+id/PrC_productQuantityEditText" />
 
-    <Button
+    <ImageButton
         android:id="@+id/PrC_acceptCurrentBarCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGreenBalance"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_input_delete"
         app:layout_constraintBottom_toBottomOf="@+id/PrC_barCodeOutputView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/PrC_barCodeOutputView"
