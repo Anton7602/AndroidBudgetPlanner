@@ -12,11 +12,12 @@
         android:id="@+id/QTr_showTransactionDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:text="@string/GetTransactionDataButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/QTr_FilterEditText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/QTr_showTransactionRecyclerView"
@@ -36,7 +37,8 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:text="Сумма транзакций: 0.00 ₽"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -85,10 +87,19 @@
         android:id="@+id/QTr_FilterCategorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:popupBackground="@color/applicationBackground"
-        app:layout_constraintBottom_toTopOf="@+id/QTr_showTransactionDataBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QTr_dateFromBtn" />
+
+    <EditText
+        android:id="@+id/QTr_FilterEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Поиск в названии"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QTr_FilterCategorySpinner" />
 
     <ProgressBar
         android:id="@+id/QTr_progressBar"
@@ -100,5 +111,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QTr_showTransactionDataBtn" />
+
+    <TextView
+        android:id="@+id/QTr_QuantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:visibility="gone"
+        android:text="0 Шт."
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/QTr_sumOfTransactionsTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/QTr_sumOfTransactionsTextView" />
+
+    <ImageButton
+        android:id="@+id/QTr_ChangeSumInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/applicationBackground"
+        android:src="@android:drawable/ic_menu_rotate"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/QTr_sumOfTransactionsTextView"
+        app:layout_constraintEnd_toStartOf="@+id/QTr_sumOfTransactionsTextView"
+        app:layout_constraintStart_toEndOf="@+id/QTr_QuantityTextView"
+        app:layout_constraintTop_toTopOf="@+id/QTr_sumOfTransactionsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

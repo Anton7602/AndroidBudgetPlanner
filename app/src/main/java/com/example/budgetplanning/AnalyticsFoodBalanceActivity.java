@@ -49,7 +49,7 @@ public class AnalyticsFoodBalanceActivity extends AppCompatActivity {
         currentYear = calendar.get(Calendar.YEAR);
         currentMonth = calendar.get(Calendar.MONTH)+1;
         currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth, currentDay);
+        Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth-1, currentDay);
         maxDayInMonth = newCalendar.getActualMaximum(calendar.DAY_OF_MONTH);
 
         //Define query range, setting up databaseReference and constructing Query

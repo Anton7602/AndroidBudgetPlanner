@@ -14,9 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,12 +30,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 //QueryTransactionActivity is an Activity that allows user to generate 
 //database query for transactions based on date range and selected category
 public class QueryTransactionsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private TextView sumOfTransactionsView, dateTo, dateFrom;
+    private TextView sumOfTransactionsView, dateTo, dateFrom, quantityOfProductsInTransactions;
+    private EditText keyWordsFilter;
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,10 +46,11 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
     private DatePickerDialog.OnDateSetListener setDateTo, setDateFrom;
     private DatabaseReference transactionDatabase;
     private ArrayList<Transaction> transactionsList;
-    private double sumOfTransactions=0;
+    private double sumOfTransactions=0, quantityOfTransactions=0;
     private int currentDay, currentMonth, currentYear;
     private DateQueryHelper dateHelper;
     private ProgressBar loadingProgressBar;
+    private ImageButton changeSumInfo;
 
 
 
@@ -138,22 +144,35 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                         sumOfTransactions = 0;
                         for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
                             Transaction transaction = currentSnapshot.getValue(Transaction.class);
-                            if (!categoryFilterSpinner.getSelectedItem().toString().equals("Все"))
-                            {
-                                if (transaction.getCategory().equals(categoryFilterSpinner.getSelectedItem().toString()))
-                                {
-                                    transactionsList.add(transaction);
-                                    sumOfTransactions=sumOfTransactions+transaction.getCost();
-                                }
-                            }
-                            else {
+                            if (matchesAllFilters(transaction)) {
                                 transactionsList.add(transaction);
                                 sumOfTransactions=sumOfTransactions+transaction.getCost();
                             }
                         }
+                        if (transactionsList.size()>0) {
+                            if (QuantityTypesMatch(transactionsList)) {
+                                quantityOfTransactions = 0;
+                                for (Transaction transaction : transactionsList) {
+                                    quantityOfTransactions += transaction.getQuantity();
+                                }
+                                quantityOfProductsInTransactions.setText(String.format("%,.2f", quantityOfTransactions) + " "+ transactionsList.get(0).getTypeOfQuantity());
+                                changeSumInfo.setVisibility(View.VISIBLE);
+                            }
+                            else  {
+                                quantityOfProductsInTransactions.setText(transactionsList.size() + " тр.");
+                                changeSumInfo.setVisibility(View.GONE);
+                            }
+                            quantityOfProductsInTransactions.setVisibility(View.VISIBLE);
+                            sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
+                            sumOfTransactionsView.setVisibility(View.VISIBLE);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        else {
+                            sumOfTransactionsView.setVisibility(View.GONE);
+                            quantityOfProductsInTransactions.setVisibility(View.GONE);
+                            changeSumInfo.setVisibility(View.GONE);
+                        }
                         loadingProgressBar.setVisibility(View.GONE);
-                        mAdapter.notifyDataSetChanged();
-                        sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
                     }
 
                     @Override
@@ -161,6 +180,18 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
 
                     }
                 });
+            }
+        });
+
+        changeSumInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sumOfTransactionsView.getText().toString().contains("Сумма")) {
+                    sumOfTransactionsView.setText("Средняя цена: " + String.format("%,.2f",sumOfTransactions/quantityOfTransactions) + " ₽/"+transactionsList.get(0).getTypeOfQuantity());
+                }
+                else {
+                    sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
+                }
             }
         });
     }
@@ -176,6 +207,49 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
 
     }
 
+    private boolean KeywordsPresent (String keyWords, String productName) {
+       String[] separatedKeyWords = keyWords.split(" ");
+       for (String separatedKeyWord : separatedKeyWords) {
+           if (!productName.toLowerCase().contains(separatedKeyWord.toLowerCase())) {
+               return false;
+           }
+       }
+       return true;
+    }
+
+    private boolean QuantityTypesMatch (ArrayList<Transaction> listOfTransactions) {
+        String currentQuantityType = " ";
+        for (Transaction transaction : listOfTransactions) {
+            if (currentQuantityType.equals(" ")) {
+                currentQuantityType = transaction.getTypeOfQuantity();
+            }
+            else {
+                if (!currentQuantityType.equals(transaction.getTypeOfQuantity())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean matchesAllFilters(Transaction transaction) {
+        //checking category filter
+        if (!categoryFilterSpinner.getSelectedItem().toString().equals("Все"))
+        {
+            if (!transaction.getCategory().equals(categoryFilterSpinner.getSelectedItem().toString()))
+            {
+                return false;
+            }
+        }
+        //checking keywords filter
+        if (keyWordsFilter.getText().toString().length()>0) {
+            if (!KeywordsPresent(keyWordsFilter.getText().toString(), transaction.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void bindViews() {
         dateTo = (TextView) findViewById(R.id.QTr_dateFromBtn);
         dateFrom = (TextView) findViewById(R.id.QTr_dateToBtn);
@@ -184,6 +258,9 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         mRecycleView=(RecyclerView) findViewById(R.id.QTr_showTransactionRecyclerView);
         showData = (Button) findViewById(R.id.QTr_showTransactionDataBtn);
         loadingProgressBar = (ProgressBar) findViewById(R.id.QTr_progressBar);
+        quantityOfProductsInTransactions = (TextView) findViewById(R.id.QTr_QuantityTextView);
+        keyWordsFilter = (EditText) findViewById(R.id.QTr_FilterEditText);
+        changeSumInfo = (ImageButton) findViewById(R.id.QTr_ChangeSumInfoBtn);
     }
 
     private void setUpRecyclerViews() {
