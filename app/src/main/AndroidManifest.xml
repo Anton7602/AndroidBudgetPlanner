@@ -3,7 +3,6 @@
     package="com.example.budgetplanning">
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -13,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AnalyticsExpenseRatioActivity"/>
+        <activity android:name=".FinancialAssetsActivity"></activity>
+        <activity android:name=".AnalyticsExpenseRatioActivity" />
         <activity android:name=".AnalyticsMainActivity" />
 
         <meta-data

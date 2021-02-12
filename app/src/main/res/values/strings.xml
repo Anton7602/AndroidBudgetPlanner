@@ -30,6 +30,7 @@
     <string name="submit_product_to_database">Внести продукт в базу</string>
     <string name="toFoodBalance">Баланс еды</string>
     <string name="toExpenseRatio">Распределение расходов</string>
+    <string name="MM_toFinancialAssetsBtn">Финансовые Активы</string>
 
     <string-array name="categories">
         <item>Еда обязательная</item>

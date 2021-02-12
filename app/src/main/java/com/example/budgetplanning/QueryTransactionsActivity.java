@@ -150,7 +150,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                             }
                         }
                         if (transactionsList.size()>0) {
-                            if (QuantityTypesMatch(transactionsList)) {
+                            if (QuantityTypesMatch(transactionsList) && transactionsList.get(0).getTypeOfQuantity().length()>0) {
                                 quantityOfTransactions = 0;
                                 for (Transaction transaction : transactionsList) {
                                     quantityOfTransactions += transaction.getQuantity();

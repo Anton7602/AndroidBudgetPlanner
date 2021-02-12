@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics;
+    Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics ,toFinancialAssets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        toFinancialAssets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFinancialAssets();
+            }
+        });
+
 
 
 
@@ -72,10 +79,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(openAnalytics);
     }
 
+    public void openFinancialAssets() {
+        Intent openFinancialAssets = new Intent(this, FinancialAssetsActivity.class);
+        startActivity(openFinancialAssets);
+    }
+
     public void bindViews() {
         toShoppingList = (Button) findViewById(R.id.MM_toShoppingListBtn);
         toAddTransaction = (Button) findViewById(R.id.MM_toAddTransactionBtn);
         toShowTransactions = (Button) findViewById(R.id.MM_toShowTransactionsBtn);
         toAnalytics = (Button) findViewById(R.id.MM_toAnalyticsBtn);
+        toFinancialAssets = (Button) findViewById(R.id.MM_toFinancialAssets);
     }
 }
