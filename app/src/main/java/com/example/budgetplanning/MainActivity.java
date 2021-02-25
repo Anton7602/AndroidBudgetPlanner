@@ -1,11 +1,40 @@
 package com.example.budgetplanning;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.common.util.IOUtils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //Main activity is a navigation main menu to the rest of th application
@@ -13,13 +42,26 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics ,toFinancialAssets;
+    private Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics ,toFinancialAssets;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindViews();
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null) {
+            mAuth.signInWithEmailAndPassword("Strateg7602@gmail.com", "strat7602").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                    } else {
+                    }
+                }
+            });
+        }
 
         toShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,35 +98,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+/*      getExchangeRate currentExchangeRate = new getExchangeRate();
+        currentExchangeRate.execute();
+        int exchangeRateReceivingRuntime =0;
+        try {
+            while (!currentExchangeRate.isExchangeRateReceived() && exchangeRateReceivingRuntime <1000) {
+                exchangeRateReceivingRuntime++;
+                Thread.sleep(2);
+            }
+            if (currentExchangeRate.isExchangeRateReceived()) {
+                Toast.makeText(getApplicationContext(), String.valueOf(currentExchangeRate.getUSD()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), String.valueOf(currentExchangeRate.getEUR()), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Данные о курсах валют не получены за отведённое время", Toast.LENGTH_SHORT).show();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
     }
-    public void openShoppingList() {
+
+    private void openShoppingList() {
         Intent openShoppingListInt = new Intent(this, ShoppingListActivity.class);
         startActivity(openShoppingListInt);
     }
 
-    public void openAddTransaction() {
+    private void openAddTransaction() {
         Intent openAddTransactionInt = new Intent(this, TransactionConstructorActivity.class);
         startActivity(openAddTransactionInt);
     }
-    public void openShowTransactions() {
+    private void openShowTransactions() {
         Intent openShowTransactionInt = new Intent(this, QueryTransactionsActivity.class);
         startActivity(openShowTransactionInt);
     }
 
-    public void openAnalytics() {
+    private void openAnalytics() {
         Intent openAnalytics = new Intent(this, AnalyticsMainActivity.class);
         startActivity(openAnalytics);
     }
 
-    public void openFinancialAssets() {
+    private void openFinancialAssets() {
         Intent openFinancialAssets = new Intent(this, FinancialAssetsActivity.class);
         startActivity(openFinancialAssets);
     }
 
-    public void bindViews() {
+    private void bindViews() {
         toShoppingList = (Button) findViewById(R.id.MM_toShoppingListBtn);
         toAddTransaction = (Button) findViewById(R.id.MM_toAddTransactionBtn);
         toShowTransactions = (Button) findViewById(R.id.MM_toShowTransactionsBtn);

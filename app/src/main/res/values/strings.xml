@@ -31,6 +31,7 @@
     <string name="toFoodBalance">Баланс еды</string>
     <string name="toExpenseRatio">Распределение расходов</string>
     <string name="MM_toFinancialAssetsBtn">Финансовые Активы</string>
+    <string name="SumOfAllAssets">Сумма по счетам:</string>
 
     <string-array name="categories">
         <item>Еда обязательная</item>

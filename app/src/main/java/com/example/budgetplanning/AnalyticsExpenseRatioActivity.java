@@ -60,6 +60,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
     private ArrayList<Transaction> transactionsList;
     private Double pieChartSum;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +87,17 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
         monthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+		if ((oldVal==11) && (newVal==0)) {
+			currentYear++;
+			yearPicker.setValue(currentYear);
+		}
+		else if ((oldVal==0) && (newVal==11)) {
+			currentYear--;
+			yearPicker.setValue(currentYear);
+		}
                 pieChartDataLoadingProgressBar.setVisibility(View.VISIBLE);
                 currentMonth=newVal+1;
-                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth, currentDay);
+                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth-1, currentDay);
                 int maxDayInMonth = newCalendar.getActualMaximum(calendar.DAY_OF_MONTH);
                 int newStartDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth,1);
                 int newEndDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth, maxDayInMonth);
@@ -101,7 +110,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 pieChartDataLoadingProgressBar.setVisibility(View.VISIBLE);
                 currentYear = newVal;
-                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth, currentDay);
+                Calendar newCalendar = new GregorianCalendar(currentYear, currentMonth-1, currentDay);
                 int maxDayInMonth = newCalendar.getActualMaximum(calendar.DAY_OF_MONTH);
                 int newStartDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth,1);
                 int newEndDate = dateHelper.dateParseToDatabaseDate(currentYear,currentMonth, maxDayInMonth);

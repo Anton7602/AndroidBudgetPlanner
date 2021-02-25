@@ -1,7 +1,7 @@
 package com.example.budgetplanning;
 
 public class FinancialAssetCard extends FinancialAsset {
-    private int lastDigitsOfNumber;
+    private String lastDigitsOfNumber;
     private String bankName;
     private int expMonth;
     private int expYear;
@@ -11,7 +11,7 @@ public class FinancialAssetCard extends FinancialAsset {
 
     }
 
-    public FinancialAssetCard(int setLastDigitsOfNumber, double setRemainingAmount, String setTypeOfCurrency, String setBankName, int setExpMonth, int setExpYear, String setPaymentMethod) {
+    public FinancialAssetCard(String setLastDigitsOfNumber, double setRemainingAmount, String setTypeOfCurrency, String setBankName, int setExpMonth, int setExpYear, String setPaymentMethod) {
         this.lastDigitsOfNumber=setLastDigitsOfNumber;
         this.remainingAmount=setRemainingAmount;
         this.typeOfCurrency=setTypeOfCurrency;
@@ -19,9 +19,10 @@ public class FinancialAssetCard extends FinancialAsset {
         this.expMonth=setExpMonth;
         this.expYear=setExpYear;
         this.paymentMethod=setPaymentMethod;
+        this.typeOfAsset = "card";
     }
 
-    public int getLastDigitsOfNumber() {return this.lastDigitsOfNumber;}
+    public String getLastDigitsOfNumber() {return this.lastDigitsOfNumber;}
     public String getBankName() {return this.bankName;}
     public int getExpMonth() {return  this.expMonth;}
     public int getExpYear() {return  this.expYear;}

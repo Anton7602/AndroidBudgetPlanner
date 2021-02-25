@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -24,6 +27,9 @@ public class FinancialAssetsActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mDatabase;
+    private TextView sumOfAssetsTextView;
+    private ProgressBar progressBar;
+    private double sumOfAssets, usdRate=0, eurRate=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +37,52 @@ public class FinancialAssetsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_financial_assets);
         bindViews();
         setUpRecyclerViews();
-        //FinancialAssetCard testCard = new FinancialAssetCard(1234, 85425.54, "₽", "Сбербанк", 05, 2022, "Visa");
+        sumOfAssets=0;
+        getExchangeRate currentExchangeRate = new getExchangeRate();
+        currentExchangeRate.execute();
+        int exchangeRateReceivingRuntime =0;
+        try {
+            while (!currentExchangeRate.isExchangeRateReceived() && exchangeRateReceivingRuntime <1000) {
+                exchangeRateReceivingRuntime++;
+                Thread.sleep(2);
+            }
+            if (currentExchangeRate.isExchangeRateReceived()) {
+                usdRate=currentExchangeRate.getUSD();
+                eurRate=currentExchangeRate.getEUR();
+            } else {
+                Toast.makeText(getApplicationContext(), "Данные о курсах валют не получены за отведённое время", Toast.LENGTH_SHORT).show();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Активы");
-        //mDatabase.push().setValue(testCard);
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listOfAssets.clear();
                 for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
-                    FinancialAssetCard currentCard = currentSnapshot.getValue(FinancialAssetCard.class);
-                    listOfAssets.add(currentCard);
+                    FinancialAsset currentAsset = currentSnapshot.getValue(FinancialAsset.class);
+                    if (currentAsset.getTypeOfCurrency().equals("₽")) {
+                        sumOfAssets += currentAsset.getRemainingAmount();
+                    }
+                    else if (currentAsset.getTypeOfCurrency().equals("$")) {
+                        sumOfAssets += currentAsset.getRemainingAmount()*usdRate;
+                    }
+                    else if (currentAsset.getTypeOfCurrency().equals("€")) {
+                        sumOfAssets += currentAsset.getRemainingAmount()*eurRate;
+                    }
+                    if (currentAsset.getTypeOfAsset().equals("card")) {
+                        FinancialAssetCard currentCard = currentSnapshot.getValue(FinancialAssetCard.class);
+                        listOfAssets.add(currentCard);
+                    }
+                    if (currentAsset.getTypeOfAsset().equals("cash")) {
+                        FinancialAssetCash currentCash = currentSnapshot.getValue(FinancialAssetCash.class);
+                        listOfAssets.add(currentCash);
+                    }
                 }
                 mAdapter.notifyDataSetChanged();
+                sumOfAssetsTextView.setText(String.format("%,.2f", sumOfAssets)+"₽");
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -54,6 +94,8 @@ public class FinancialAssetsActivity extends AppCompatActivity {
 
     private void bindViews() {
         mRecycleView = (RecyclerView) findViewById(R.id.FAa_FinancialAssetsRecyclerView);
+        sumOfAssetsTextView = (TextView) findViewById(R.id.FAa_sumOfAssets);
+        progressBar = (ProgressBar) findViewById(R.id.FAa_ProgressBar);
     }
 
     private void setUpRecyclerViews() {
