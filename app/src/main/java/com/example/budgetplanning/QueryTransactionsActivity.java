@@ -2,6 +2,7 @@ package com.example.budgetplanning;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -151,29 +152,8 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                                 sumOfTransactions=sumOfTransactions+transaction.getCost();
                             }
                         }
-                        if (transactionsList.size()>0) {
-                            if (QuantityTypesMatch(transactionsList) && transactionsList.get(0).getTypeOfQuantity().length()>0) {
-                                quantityOfTransactions = 0;
-                                for (Transaction transaction : transactionsList) {
-                                    quantityOfTransactions += transaction.getQuantity();
-                                }
-                                quantityOfProductsInTransactions.setText(String.format("%,.2f", quantityOfTransactions) + " "+ transactionsList.get(0).getTypeOfQuantity());
-                                changeSumInfo.setVisibility(View.VISIBLE);
-                            }
-                            else  {
-                                quantityOfProductsInTransactions.setText(transactionsList.size() + " тр.");
-                                changeSumInfo.setVisibility(View.GONE);
-                            }
-                            quantityOfProductsInTransactions.setVisibility(View.VISIBLE);
-                            sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
-                            sumOfTransactionsView.setVisibility(View.VISIBLE);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                        else {
-                            sumOfTransactionsView.setVisibility(View.GONE);
-                            quantityOfProductsInTransactions.setVisibility(View.GONE);
-                            changeSumInfo.setVisibility(View.GONE);
-                        }
+                        UpdateQuantityInfo();
+                        mAdapter.notifyDataSetChanged();
                         loadingProgressBar.setVisibility(View.GONE);
                     }
 
@@ -219,6 +199,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
        return true;
     }
 
+
     private boolean QuantityTypesMatch (ArrayList<Transaction> listOfTransactions) {
         String currentQuantityType = " ";
         for (Transaction transaction : listOfTransactions) {
@@ -252,6 +233,37 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         return true;
     }
 
+    private void UpdateQuantityInfo() {
+        if (transactionsList.size()>0) {
+            if (QuantityTypesMatch(transactionsList) && transactionsList.get(0).getTypeOfQuantity().length()>0) {
+                quantityOfTransactions = 0;
+                for (Transaction transaction : transactionsList) {
+                    quantityOfTransactions += transaction.getQuantity();
+                }
+                quantityOfProductsInTransactions.setText(String.format("%,.2f", quantityOfTransactions) + " "+ transactionsList.get(0).getTypeOfQuantity());
+                changeSumInfo.setVisibility(View.VISIBLE);
+                if (sumOfTransactionsView.getText().toString().contains("Средняя")) {
+                    sumOfTransactionsView.setText("Средняя цена: " + String.format("%,.2f",sumOfTransactions/quantityOfTransactions) + " ₽/"+transactionsList.get(0).getTypeOfQuantity());
+                }
+                else {
+                    sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
+                }
+            }
+            else  {
+                quantityOfProductsInTransactions.setText(transactionsList.size() + " тр.");
+                sumOfTransactionsView.setText("Сумма транзакций: "+ String.format("%,.2f",sumOfTransactions) + " ₽");
+                changeSumInfo.setVisibility(View.GONE);
+            }
+            quantityOfProductsInTransactions.setVisibility(View.VISIBLE);
+            sumOfTransactionsView.setVisibility(View.VISIBLE);
+        }
+        else {
+            sumOfTransactionsView.setVisibility(View.GONE);
+            quantityOfProductsInTransactions.setVisibility(View.GONE);
+            changeSumInfo.setVisibility(View.GONE);
+        }
+    }
+
     private void bindViews() {
         dateTo = (TextView) findViewById(R.id.QTr_dateFromBtn);
         dateFrom = (TextView) findViewById(R.id.QTr_dateToBtn);
@@ -271,6 +283,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new TransactionAdapter(transactionsList);
         mRecycleView.setLayoutManager(mLayoutManager);
+        new ItemTouchHelper(recyclerViewSwiper).attachToRecyclerView(mRecycleView);
         mRecycleView.setAdapter(mAdapter);
     }
 
@@ -280,4 +293,19 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         categoryFilterSpinner.setAdapter(categoryAdapter);
         categoryFilterSpinner.setOnItemSelectedListener(this);
     }
+
+    ItemTouchHelper.SimpleCallback recyclerViewSwiper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            sumOfTransactions -= transactionsList.get(viewHolder.getAdapterPosition()).getCost();
+            transactionsList.remove(viewHolder.getAdapterPosition());
+            UpdateQuantityInfo();
+            mAdapter.notifyDataSetChanged();
+        }
+    };
 }
