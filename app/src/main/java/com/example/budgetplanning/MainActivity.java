@@ -42,7 +42,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics ,toFinancialAssets;
+    private Button toShoppingList, toAddTransaction, toShowTransactions, toAnalytics ,toFinancialAssets, toCatalog;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
@@ -98,23 +98,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*      getExchangeRate currentExchangeRate = new getExchangeRate();
-        currentExchangeRate.execute();
-        int exchangeRateReceivingRuntime =0;
-        try {
-            while (!currentExchangeRate.isExchangeRateReceived() && exchangeRateReceivingRuntime <1000) {
-                exchangeRateReceivingRuntime++;
-                Thread.sleep(2);
+        toCatalog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCatalog();
             }
-            if (currentExchangeRate.isExchangeRateReceived()) {
-                Toast.makeText(getApplicationContext(), String.valueOf(currentExchangeRate.getUSD()), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), String.valueOf(currentExchangeRate.getEUR()), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Данные о курсах валют не получены за отведённое время", Toast.LENGTH_SHORT).show();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+        });
     }
 
     private void openShoppingList() {
@@ -141,11 +130,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(openFinancialAssets);
     }
 
+    private void openCatalog() {
+        Intent openCatalog = new Intent(this, TransactionConstructorActivityTest.class);
+        startActivity(openCatalog);
+    }
+
     private void bindViews() {
         toShoppingList = (Button) findViewById(R.id.MM_toShoppingListBtn);
         toAddTransaction = (Button) findViewById(R.id.MM_toAddTransactionBtn);
         toShowTransactions = (Button) findViewById(R.id.MM_toShowTransactionsBtn);
         toAnalytics = (Button) findViewById(R.id.MM_toAnalyticsBtn);
         toFinancialAssets = (Button) findViewById(R.id.MM_toFinancialAssets);
+        toCatalog = (Button) findViewById(R.id.MM_toProductCatalog);
     }
 }

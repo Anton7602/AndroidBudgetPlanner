@@ -32,85 +32,108 @@
 
                 <TextView
                     android:id="@+id/FAc_cardNumberTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:autoSizeTextType="uniform"
                     android:fontFamily="@font/card_asset_font"
+                    android:maxLines="1"
                     android:text="0000  0000  0000  0000"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/FAc_cardExpireDateTextView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/Fac_creditCardChip"
+                    app:layout_constraintTop_toBottomOf="@+id/Fac_creditCardChip"
+                    app:layout_constraintVertical_weight="1" />
 
                 <TextView
                     android:id="@+id/FAc_valid"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dp"
+                    android:autoSizeTextType="uniform"
                     android:text="VALID"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,1.5:1"
                     app:layout_constraintStart_toStartOf="@+id/FAc_cardNumberTextView"
                     app:layout_constraintTop_toBottomOf="@+id/FAc_cardNumberTextView" />
 
                 <TextView
                     android:id="@+id/FAc_thru"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:autoSizeTextType="uniform"
                     android:text="THRU"
+                    app:layout_constraintBottom_toBottomOf="@+id/FAc_cardExpireDateTextView"
+                    app:layout_constraintDimensionRatio="h,1.5:1"
                     app:layout_constraintStart_toStartOf="@+id/FAc_valid"
                     app:layout_constraintTop_toBottomOf="@+id/FAc_valid" />
 
                 <TextView
                     android:id="@+id/FAc_cardExpireDateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:autoSizeTextType="uniform"
                     android:fontFamily="@font/card_asset_font"
                     android:text="00/00"
-                    android:textSize="22sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/FAc_thru"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/FAc_valid"
-                    app:layout_constraintTop_toTopOf="@+id/FAc_valid" />
+                    app:layout_constraintTop_toBottomOf="@+id/FAc_cardNumberTextView"
+                    app:layout_constraintVertical_weight="0.75" />
 
                 <TextView
                     android:id="@+id/FAc_cardBankName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:autoSizeTextType="uniform"
                     android:fontFamily="@font/card_asset_font"
+                    android:maxLines="1"
                     android:text="Emptybankname"
-                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/Fac_creditCardChip"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="0.75" />
 
                 <ImageView
                     android:id="@+id/Fac_creditCardChip"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     app:layout_constraintBottom_toTopOf="@+id/FAc_cardNumberTextView"
-                    app:layout_constraintStart_toStartOf="@+id/FAc_cardNumberTextView"
+                    app:layout_constraintDimensionRatio="H,6:8"
+                    app:layout_constraintStart_toStartOf="@+id/FAc_cardBankName"
                     app:layout_constraintTop_toBottomOf="@+id/FAc_cardBankName"
+                    app:layout_constraintVertical_weight="1.25"
                     app:srcCompat="@drawable/it_credit_card_chip" />
 
                 <TextView
                     android:id="@+id/FAc_cardRemainingAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:maxLines="1"
                     android:text="00000.00₽"
-                    android:textSize="25sp"
+                    app:autoSizeMaxTextSize="28sp"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toBottomOf="@+id/Fac_creditCardChip"
-                    app:layout_constraintEnd_toEndOf="@+id/FAc_cardNumberTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/Fac_creditCardChip"
                     app:layout_constraintTop_toTopOf="@+id/Fac_creditCardChip" />
 
                 <ImageView
                     android:id="@+id/FAc_paymentSystemLogo"
-                    android:layout_width="80dp"
-                    android:layout_height="65dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="H,6:8"
+                    app:layout_constraintEnd_toEndOf="@+id/FAc_cardNumberTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/FAc_cardNumberTextView"
                     app:srcCompat="@drawable/it_visa_logo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
