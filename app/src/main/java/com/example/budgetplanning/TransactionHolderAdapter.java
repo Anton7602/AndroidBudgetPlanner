@@ -52,7 +52,7 @@ public class TransactionHolderAdapter extends RecyclerView.Adapter<TransactionHo
         holder.transactionDate.setText(String.valueOf(transactionHolder.getDateFromTo()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.transactionsToShow.getContext(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(transactionHolder.getListOfTransactions().size());
-        TransactionAdapter transactionAdapter = new TransactionAdapter(transactionHolder.getListOfTransactions());
+        TransactionAdapter transactionAdapter = new TransactionAdapter(transactionHolder.getListOfTransactions(), transactionHolder.getListOfKeys());
         holder.transactionsToShow.setLayoutManager(layoutManager);
         holder.transactionsToShow.setAdapter(transactionAdapter);
         holder.transactionsToShow.setRecycledViewPool(viewPool);

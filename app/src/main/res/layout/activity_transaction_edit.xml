@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransactionConstructorActivity">
+
+    <Spinner
+        android:id="@+id/TrE_categorySpinner"
+        android:popupBackground="@color/applicationBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/applicationBackground"
+        android:soundEffectsEnabled="false"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_textView2" />
+
+    <TextView
+        android:id="@+id/TrE_textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:text="@string/ProductCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TrE_textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/ProductName"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/TrE_textView2"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_categorySpinner" />
+
+    <AutoCompleteTextView
+        android:id="@+id/TrE_productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:completionThreshold="1"
+        android:hint="@string/EditProductName"
+        app:layout_constraintEnd_toStartOf="@+id/TrE_toProductConstructorBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_textView3" />
+
+    <TextView
+        android:id="@+id/TrE_quantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/Quantity"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/TrE_textView3"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_productName" />
+
+    <EditText
+        android:id="@+id/TrE_productQuantity"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:inputType="numberDecimal"
+        android:hint="@string/EditQuantity"
+        app:layout_constraintStart_toStartOf="@+id/TrE_productName"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_quantityTextView" />
+
+    <Spinner
+        android:id="@+id/TrE_typeOfQuantitySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/TrE_productQuantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TrE_productQuantity"
+        app:layout_constraintTop_toTopOf="@+id/TrE_productQuantity" />
+
+    <TextView
+        android:id="@+id/TrE_textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="@string/Cost"
+        app:layout_constraintStart_toStartOf="@+id/TrE_quantityTextView"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_productQuantity" />
+
+    <EditText
+        android:id="@+id/TrE_productCost"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/EditCost"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/TrE_productQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_textView8" />
+
+    <Spinner
+        android:id="@+id/TrE_typeOfCurrencySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:popupBackground="@color/applicationBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/TrE_productCost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TrE_productCost"
+        app:layout_constraintTop_toTopOf="@+id/TrE_productCost" />
+
+    <TextView
+        android:id="@+id/TrE_textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="@string/PaymentDate"
+        app:layout_constraintStart_toStartOf="@+id/TrE_textView8"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_productCost" />
+
+    <TextView
+        android:id="@+id/TrE_transactionDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/EditDate"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TrE_textView10"
+        app:layout_constraintTop_toTopOf="@+id/TrE_textView10" />
+
+    <Button
+        android:id="@+id/TrE_submitTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/editTransaction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_textView10" />
+
+    <Button
+        android:id="@+id/TrE_deleteTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/deleteTransaction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_submitTransaction" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/TrE_isProductSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#808080"
+        android:text="@string/isProduct"
+        app:layout_constraintBottom_toTopOf="@+id/TrE_textView3"
+        app:layout_constraintStart_toStartOf="@+id/TrE_textView3"
+        app:layout_constraintTop_toBottomOf="@+id/TrE_categorySpinner" />
+
+    <ImageButton
+        android:id="@+id/TrE_toProductConstructorBtn"
+        android:background="@color/applicationBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/TrE_productName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TrE_productName"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

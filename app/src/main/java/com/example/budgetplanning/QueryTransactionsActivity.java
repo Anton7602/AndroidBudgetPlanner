@@ -48,6 +48,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
     private DatePickerDialog.OnDateSetListener setDateTo, setDateFrom;
     private DatabaseReference transactionDatabase;
     private ArrayList<Transaction> transactionsList;
+    private ArrayList<String> keysList = new ArrayList<>();
     private double sumOfTransactions=0, quantityOfTransactions=0;
     private int currentDay, currentMonth, currentYear;
     private DateQueryHelper dateHelper;
@@ -143,7 +144,9 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                 showTransactionsQuery.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                         transactionsList.clear();
+                        keysList.clear();
                         sumOfTransactions = 0;
                         for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
                             Transaction transaction = currentSnapshot.getValue(Transaction.class);
@@ -151,6 +154,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
                                 transactionsList.add(transaction);
                                 sumOfTransactions=sumOfTransactions+transaction.getCost();
                             }
+                            keysList.add(currentSnapshot.getKey());
                         }
                         UpdateQuantityInfo();
                         mAdapter.notifyDataSetChanged();
@@ -281,7 +285,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
 	transactionsList = new ArrayList<Transaction>();
 	mRecycleView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new TransactionAdapter(transactionsList);
+        mAdapter = new TransactionAdapter(transactionsList, keysList);
         mRecycleView.setLayoutManager(mLayoutManager);
         new ItemTouchHelper(recyclerViewSwiper).attachToRecyclerView(mRecycleView);
         mRecycleView.setAdapter(mAdapter);

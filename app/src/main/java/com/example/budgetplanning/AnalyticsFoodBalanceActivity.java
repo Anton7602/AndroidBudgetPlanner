@@ -32,6 +32,7 @@ public class AnalyticsFoodBalanceActivity extends AppCompatActivity {
     private RecyclerView.Adapter mBadAdapter, mGoodAdapter;
     private RecyclerView.LayoutManager mGoodLayoutManager, mBadLayoutManager;
     private ArrayList<Transaction> goodFoodList, badFoodList, tempList;
+    private ArrayList<String> goodKeysList, badKeysList, tempKeys;
     private int currentYear, currentMonth, currentDay, maxDayInMonth, numberOfWeeksInMonth;
     private double sumOfGoodTransactions, sumOfBadTransactions;
 
@@ -64,16 +65,20 @@ public class AnalyticsFoodBalanceActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 goodFoodList = new ArrayList<>();
                 badFoodList = new ArrayList<>();
+                goodKeysList = new ArrayList<>();
+                badKeysList = new ArrayList<>();
                 sumOfGoodTransactions = 0;
                 sumOfBadTransactions = 0;
                 for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
                     Transaction transaction = currentSnapshot.getValue(Transaction.class);
                     if (transaction.getCategory().equals("Еда обязательная")) {
                         goodFoodList.add(transaction);
+                        goodKeysList.add(currentSnapshot.getKey());
                         sumOfGoodTransactions = sumOfGoodTransactions+ transaction.getCost();
                     }
                     if (transaction.getCategory().equals("Еда необязательная")) {
                         badFoodList.add(transaction);
+                        badKeysList.add(currentSnapshot.getKey());
                         sumOfBadTransactions = sumOfBadTransactions + transaction.getCost();
                     }
                 }
@@ -130,13 +135,15 @@ public class AnalyticsFoodBalanceActivity extends AppCompatActivity {
 	    ArrayList<TransactionHolder> transactionHolderList = new ArrayList<>();
 	    while ((numberOfWeeksInMonth*7)-6<maxDayInMonth) {
             tempList = new ArrayList<Transaction>();
+            tempKeys = new ArrayList<String>();
 		    for (Transaction transaction : toSortTransactionArray) {
 			    int transactionDay = Integer.parseInt(String.valueOf(transaction.getDate()).substring(6));
 			    if (transactionDay>=((7*numberOfWeeksInMonth)-6) && transactionDay<=7*numberOfWeeksInMonth) {
 				    tempList.add(transaction);
+				    tempKeys.add("");
 			    }
 		    }
-		    TransactionHolder transactionHolder = new TransactionHolder(tempList,
+		    TransactionHolder transactionHolder = new TransactionHolder(tempList, tempKeys,
 		                                    dateHelper.dateParseToString(currentYear,currentMonth, (7*numberOfWeeksInMonth)-6) + "->" + dateHelper.dateParseToString(currentYear,currentMonth,Math.min(7*numberOfWeeksInMonth,maxDayInMonth)),
 		                                                numberOfWeeksInMonth);
 		    transactionHolderList.add(transactionHolder);

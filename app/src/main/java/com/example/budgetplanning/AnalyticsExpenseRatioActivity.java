@@ -58,6 +58,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
     private ArrayList<Float> categoriesValuesArray;
     private ArrayList<String> categoriesArray;
     private ArrayList<Transaction> transactionsList;
+    private ArrayList<String> keysList;
     private Double pieChartSum;
 
 
@@ -126,6 +127,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 expensesRatePieChartConfig = new AnimatedPieViewConfig();
                 transactionsList = new ArrayList<>();
+                keysList = new ArrayList<>();
                 categoriesValuesArray = new ArrayList<Float>();
                 for (int i =0; i<categoriesArray.size();i++ ) {
                     categoriesValuesArray.add(0.0f);
@@ -134,6 +136,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
                 for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
                     Transaction transaction = currentSnapshot.getValue(Transaction.class);
                     transactionsList.add(transaction);
+                    keysList.add(currentSnapshot.getKey());
                     categoriesValuesArray.set(categoriesArray.indexOf(transaction.getCategory()), categoriesValuesArray.get(categoriesArray.indexOf(transaction.getCategory()))+(float) transaction.getCost());
                 }
                 Random colorRandomizer = new Random();
@@ -189,7 +192,7 @@ public class AnalyticsExpenseRatioActivity extends AppCompatActivity {
     private void setUpRecyclerView(ArrayList<Transaction> transactionsForRecyclerView) {
         transactionsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        TransactionAdapter adapter = new TransactionAdapter(transactionsForRecyclerView);
+        TransactionAdapter adapter = new TransactionAdapter(transactionsForRecyclerView, keysList);
         transactionsRecyclerView.setLayoutManager(layoutManager);
         transactionsRecyclerView.setAdapter(adapter);
     }

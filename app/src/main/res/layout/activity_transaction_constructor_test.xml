@@ -8,12 +8,16 @@
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
+        app:layout_constraintBottom_toTopOf="@+id/TrC_productNameLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="0.08">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/TrC_categoryChipGroup"
@@ -21,8 +25,8 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:padding="10dp"
-            app:selectionRequired="true"
             app:chipSpacingHorizontal="10dp"
+            app:selectionRequired="true"
             app:singleLine="true"
             app:singleSelection="true">
 
@@ -35,125 +39,140 @@
         android:id="@+id/TrC_productNameLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         app:endIconMode="none"
+        app:layout_constraintBottom_toTopOf="@+id/TrC_productQuantityLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintVertical_weight="0.08">
 
         <AutoCompleteTextView
             android:id="@+id/TrC_productNamesAutocomplete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:autoSizeTextType="uniform"
             android:background="@null"
-            android:hint="Наименование товара" />
+            android:hint="Наименование товара"
+            android:padding="5dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TrC_productQuantityLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="242dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:endIconMode="none"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toStartOf="@+id/TrC_productQuantityTypeLayout"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TrC_productNameLayout">
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productNameLayout"
+        app:layout_constraintVertical_weight="0.08">
 
         <EditText
             android:id="@+id/TrC_productQuantityEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:autoSizeTextType="uniform"
             android:background="@null"
             android:hint="Количество товара"
             android:inputType="numberDecimal"
             android:padding="16dp"
-            android:singleLine="true"
-            android:textSize="16sp" />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TrC_productQuantityTypeLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/TrC_productQuantityLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/TrC_productQuantityLayout"
         app:layout_constraintTop_toBottomOf="@+id/TrC_productNameLayout">
 
         <AutoCompleteTextView
             android:id="@+id/TrC_productQuantityTypeAutocomplete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:autoSizeTextType="uniform"
             android:background="@null"
             android:hint="Величина"
             android:inputType="none"
             android:padding="16dp"
-            android:singleLine="true"
-            android:textSize="16sp" />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:endIconMode="none"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
         app:layout_constraintEnd_toStartOf="@+id/TrC_sourceOfTransactionRecyclerView"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TrC_productQuantityTypeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productQuantityLayout"
+        app:layout_constraintVertical_weight="0.08">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
             android:background="@null"
             android:hint="Стоимость"
             android:inputType="numberDecimal"
             android:padding="16dp"
-            android:singleLine="true"
-            android:textSize="16sp" />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView2"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_weight="0.08">
 
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
             android:background="@null"
             android:hint="Валюта"
             android:inputType="none"
             android:padding="16dp"
-            android:singleLine="true"
-            android:textSize="16sp" />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TrC_sourceOfTransactionRecyclerView"
-        android:layout_width="198dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
@@ -161,7 +180,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/TrC_productQuantityTypeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/TrC_productQuantityTypeLayout"
+        app:layout_constraintHorizontal_weight="1.3"/>
 
     <ProgressBar
         android:id="@+id/TrC_LoadingAssetsProgressBar"
@@ -176,19 +196,22 @@
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:fadeScrollbars="true"
         android:layoutDirection="rtl"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintVertical_weight="0.08">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/TrC_dateChipGroup"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:checked="true"
             android:padding="10dp"
             app:chipSpacingHorizontal="10dp"
@@ -202,38 +225,49 @@
     </HorizontalScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
-        tools:layout_editor_absoluteX="214dp">
+        app:layout_constraintVertical_weight="0.5">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp" />
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!--            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:id="@+id/coordinatorLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/TrC_productNameLayout">
 
-                    <com.google.android.material.bottomappbar.BottomAppBar
-                        android:id="@+id/TrC_bottom_app_bar"
+
+                    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                        android:id="@+id/coordinatorLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/applicationBackground"
-                        android:visibility="invisible" />
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/TrC_productNameLayout">
 
-                    <include layout="@layout/transaction_constructor_bottom_sheet" />
+                        <com.google.android.material.bottomappbar.BottomAppBar
+                            android:id="@+id/TrC_bottom_app_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:background="@color/applicationBackground"
+                            android:visibility="invisible" />
+
+                        <include layout="@layout/transaction_constructor_bottom_sheet" />
 
 
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

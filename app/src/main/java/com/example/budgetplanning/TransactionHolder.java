@@ -5,13 +5,15 @@ import java.util.ArrayList;
 public class TransactionHolder {
     private int number;
     private ArrayList<Transaction> listOfTransactions;
+    private ArrayList<String> listOfKeys;
     private String dateFromTo;
     private double sumOfTransactions;
     private boolean isExpanded;
 
-    public TransactionHolder(ArrayList<Transaction> listOfTransactions,String dateFromTo, int number) {
+    public TransactionHolder(ArrayList<Transaction> listOfTransactions, ArrayList<String> listOfKeys,String dateFromTo, int number) {
         setDateFromTo(dateFromTo);
         setListOfTransactions(listOfTransactions);
+        setListOfKeys(listOfKeys);
         setNumber(number);
         isExpanded=false;
         sumOfTransactions = 0;
@@ -20,6 +22,13 @@ public class TransactionHolder {
         }
     }
 
+    private void setListOfKeys(ArrayList<String> listOfKeys) {
+        this.listOfKeys = listOfKeys;
+    }
+
+    public ArrayList<String> getListOfKeys() {
+        return listOfKeys;
+    }
 
     public double getSumOfTransactions() {
         return sumOfTransactions;

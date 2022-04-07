@@ -13,7 +13,9 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -21,6 +23,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +62,7 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
     private int AssetsRecyclerViewScrollPosition, currentActiveAsset;
     private LinearLayoutManager mLayoutManager;
     private AutoCompleteTextView productNamesTextView, productQuantityTypesTextView;
+    private EditText productQuantityTextView;
     private String currentBarcode;
     private ChipGroup categoryChips, dateChips;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -65,6 +70,7 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
     private DatabaseReference productDatabase, assetDatabase;
     private ArrayList<String> productNamesList;
     private ArrayList<Product> productList;
+    private TextInputLayout productNameLayout, productQuantityLayout;
     private ArrayList<FinancialAsset> listOfAssets;
 
     @Override
@@ -72,6 +78,7 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_constructor_test);
         bindViews();
+        adjustTextFieldsToScreenSize();
         setUpAutocompleteTextView();
         setUpRecyclerView();
         initializeDetectorsAndSources();
@@ -297,13 +304,26 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
         mBottomAppBar = findViewById(R.id.TrC_bottom_app_bar);
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        productNameLayout = (TextInputLayout) findViewById(R.id.TrC_productNameLayout);
+        productQuantityLayout = (TextInputLayout) findViewById(R.id.TrC_productQuantityLayout);
         productNamesTextView = (AutoCompleteTextView) findViewById(R.id.TrC_productNamesAutocomplete);
+        productQuantityTextView = (EditText) findViewById(R.id.TrC_productQuantityEditText);
         productQuantityTypesTextView = (AutoCompleteTextView) findViewById(R.id.TrC_productQuantityTypeAutocomplete);
         categoryChips = (ChipGroup) findViewById(R.id.TrC_categoryChipGroup);
         dateChips = (ChipGroup) findViewById(R.id.TrC_dateChipGroup);
         barCodeCameraView = (SurfaceView) findViewById(R.id.TrC_BarCodeSurfaceView);
         mRecyclerView = (RecyclerView) findViewById(R.id.TrC_sourceOfTransactionRecyclerView);
         loadingAssetsProgressBar = (ProgressBar) findViewById(R.id.TrC_LoadingAssetsProgressBar);
+    }
+
+    private void adjustTextFieldsToScreenSize() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.heightPixels;
+        if (height < 1600) {
+            productNameLayout.setHintEnabled(false);
+            productQuantityLayout.setHintEnabled(false);
+        }
     }
 
     @Override

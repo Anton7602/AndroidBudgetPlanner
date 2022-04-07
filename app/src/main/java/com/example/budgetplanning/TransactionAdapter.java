@@ -1,17 +1,23 @@
 package com.example.budgetplanning;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
     private ArrayList<Transaction> adapterTransactionList;
+    private ArrayList<String> adapterKeysList;
 
     public static class TransactionViewHolder extends RecyclerView.ViewHolder {
         public TextView transactionName;
@@ -19,6 +25,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         public TextView transactionDate;
         public TextView transactionQuantity;
         public TextView transactionCost;
+        public String transactionKey;
+
+        final static public String EXTRA_PRODUCT_NAME = "TransactionName";
+        final static public String EXTRA_PRODUCT_CATEGORY = "TransactionCategory";
+        final static public String EXTRA_PRODUCT_DATE = "TransactionDate";
+        final static public String EXTRA_PRODUCT_QUANTITY = "TransactionQuantity";
+        final static public String EXTRA_PRODUCT_COST = "TransactionCost";
+        final static public String EXTRA_PRODUCT_KEY = "TransactionKey";
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -27,11 +41,30 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             transactionDate=itemView.findViewById(R.id.transactionDateOfTransactionTextView);
             transactionQuantity=itemView.findViewById(R.id.transactionQuantityTextView);
             transactionCost=itemView.findViewById(R.id.transactionCostTextView);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (transactionKey.length()>1) {
+                    //Toast.makeText(view.getContext(), transactionKey.toString(), Toast.LENGTH_LONG).show();
+                    Intent openTransactionEdit = new Intent(view.getContext(), TransactionEditActivity.class);
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_NAME, transactionName.getText().toString());
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_CATEGORY, transactionCategory.getText().toString());
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_DATE, transactionDate.getText().toString());
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_QUANTITY, transactionQuantity.getText().toString());
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_COST, transactionCost.getText().toString());
+                    openTransactionEdit.putExtra(EXTRA_PRODUCT_KEY, transactionKey);
+                    startActivity(view.getContext(), openTransactionEdit, null);
+                    }
+                    return false;
+                }
+            });
         }
     }
 
-    public  TransactionAdapter(ArrayList<Transaction> transactionList) {
+
+    public  TransactionAdapter(ArrayList<Transaction> transactionList, ArrayList<String> keysList) {
         adapterTransactionList=transactionList;
+        adapterKeysList=keysList;
     }
 
     @NonNull
@@ -56,8 +89,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (newTransaction.isService()) {
             holder.transactionQuantity.setVisibility(View.GONE);
         }
+        if (adapterKeysList.size()>0) {
+            holder.transactionKey = adapterKeysList.get(position);
+        }
         holder.transactionCost.setText(String.format("%,.2f",newTransaction.getCost())+" "+ newTransaction.getTypeOfCurrency());
     }
+
 
     @Override
     public int getItemCount() {
