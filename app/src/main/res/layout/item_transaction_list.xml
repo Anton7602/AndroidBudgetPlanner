@@ -2,11 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardPreventCornerOverlap="false"
-    app:cardBackgroundColor="@color/applicationBackground"
-    android:background="@color/applicationBackground"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    app:cardBackgroundColor="@color/applicationBackground"
+    app:cardPreventCornerOverlap="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,7 +64,6 @@
             android:text="0.00 Р"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/transactionNameTextView" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

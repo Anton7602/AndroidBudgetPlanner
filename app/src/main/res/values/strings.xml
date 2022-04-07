@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BudgetPlanning</string>
+    <string name="app_name">Ostrom</string>
     <string name="button_test">Button</string>
     <string name="intro_String">Hello World!</string>
     <string name="InputElementToShoppingList">Введите название продукта</string>

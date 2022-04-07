@@ -81,21 +81,21 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
         adjustTextFieldsToScreenSize();
         setUpAutocompleteTextView();
         setUpRecyclerView();
-        initializeDetectorsAndSources();
+        //initializeDetectorsAndSources();
         setUpCategoriesInChips();
         setUpDateChips();
         productQuantityTypesTextView.setText(getResources().getStringArray(R.array.typesOfQuantity)[0]);
         productNamesTextView.requestFocus();
-        mDetector = new GestureDetectorCompat(this, new SwipeGestureListener());
+        //mDetector = new GestureDetectorCompat(this, new SwipeGestureListener());
         loadProductsFromDatabase();
         loadAssetsFromDatabase();
 
-        mBottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        });
+//        mBottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//            }
+//        });
     }
 
     private void setUpCategoriesInChips() {
