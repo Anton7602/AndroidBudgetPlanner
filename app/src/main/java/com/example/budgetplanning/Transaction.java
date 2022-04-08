@@ -1,16 +1,25 @@
 package com.example.budgetplanning;
 
-import android.widget.Toast;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
+
+@Entity
 public class Transaction {
+    @PrimaryKey
+    @NotNull
+    private String dbKey;
     private String category;
     private String name;
     private String typeOfQuantity;
     private double quantity;
     private String typeOfCurrency;
     private double cost;
+    @Ignore
     private boolean service;
-
     int date;
 
     Transaction() { }
@@ -50,8 +59,6 @@ public class Transaction {
         setDate(setDate);
         setIsService(service);
     }
-
-
 
     public String getCategory() {
         return category;
@@ -115,5 +122,14 @@ public class Transaction {
 
     public void setIsService(boolean service) {
         this.service = service;
+    }
+
+    @NotNull
+    public String getDbKey() {
+        return dbKey;
+    }
+    @NotNull
+    public void setDbKey(String key) {
+        this.dbKey = key;
     }
 }

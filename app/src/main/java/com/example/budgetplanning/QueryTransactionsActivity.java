@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -230,9 +231,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
         }
         //checking keywords filter
         if (keyWordsFilter.getText().toString().length()>0) {
-            if (!KeywordsPresent(keyWordsFilter.getText().toString(), transaction.getName())) {
-                return false;
-            }
+            return KeywordsPresent(keyWordsFilter.getText().toString(), transaction.getName());
         }
         return true;
     }
@@ -282,7 +281,7 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
     }
 
     private void setUpRecyclerViews() {
-	transactionsList = new ArrayList<Transaction>();
+	transactionsList = new ArrayList<>();
 	mRecycleView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new TransactionAdapter(transactionsList, keysList);
