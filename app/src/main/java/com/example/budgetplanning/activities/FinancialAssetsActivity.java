@@ -1,7 +1,6 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
+import com.example.budgetplanning.entities.FinancialAsset;
+import com.example.budgetplanning.adapters.FinancialAssetAdapter;
+import com.example.budgetplanning.entities.FinancialAssetCard;
+import com.example.budgetplanning.entities.FinancialAssetCash;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.utility.getExchangeRate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

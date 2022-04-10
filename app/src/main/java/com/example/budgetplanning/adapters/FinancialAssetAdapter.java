@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.budgetplanning.entities.FinancialAsset;
+import com.example.budgetplanning.entities.FinancialAssetCard;
+import com.example.budgetplanning.entities.FinancialAssetCash;
+import com.example.budgetplanning.R;
 
 import java.util.ArrayList;
 
@@ -58,11 +63,11 @@ public class FinancialAssetAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 FinancialAssetCashViewHolder cashHolder = (FinancialAssetCashViewHolder) viewHolder;
                 FinancialAssetCash currentFinancialAssetCash = (FinancialAssetCash) FinancialAssetList.get(position);
                 cashHolder.remainingAmount.setText(String.format("%,.2f", currentFinancialAssetCash.getRemainingAmount())+" "+currentFinancialAssetCash.getTypeOfCurrency());
-                if (currentFinancialAssetCash.typeOfCurrency.equals("$")) {
+                if (currentFinancialAssetCash.getTypeOfCurrency().equals("$")) {
                     cashHolder.backgroundImage.setImageResource(R.drawable.it_usd_background);
 
                 }
-                else if (currentFinancialAssetCash.typeOfCurrency.equals("€")) {
+                else if (currentFinancialAssetCash.getTypeOfCurrency().equals("€")) {
                     cashHolder.backgroundImage.setImageResource(R.drawable.it_eur_background);
                 }
                 break;

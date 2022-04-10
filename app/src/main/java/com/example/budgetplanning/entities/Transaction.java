@@ -1,8 +1,10 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.entities;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.example.budgetplanning.utility.DateQueryHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,9 +24,9 @@ public class Transaction {
     private boolean service;
     int date;
 
-    Transaction() { }
+    public Transaction() { }
 
-    Transaction(String setCategory, String setName, String setTypeOfQuantity, double setQuantity,
+    public Transaction(String setCategory, String setName, String setTypeOfQuantity, double setQuantity,
                 String setTypeOfCurrency, double setCost, int setDate) {
         setCategory(setCategory);
         setName(setName);
@@ -36,7 +38,7 @@ public class Transaction {
         setIsService(false);
     }
 
-    Transaction(String setCategory, String setName, String setTypeOfQuantity, double setQuantity,
+    public Transaction(String setCategory, String setName, String setTypeOfQuantity, double setQuantity,
                 String setTypeOfCurrency, double setCost, int setDate, boolean service) {
         setCategory(setCategory);
         setName(setName);
@@ -48,7 +50,7 @@ public class Transaction {
         setIsService(service);
     }
 
-    Transaction(String setCategory, String setName, String setTypeOfCurrency,
+    public Transaction(String setCategory, String setName, String setTypeOfCurrency,
                 double setCost, int setDate, boolean service) {
         setCategory(setCategory);
         setName(setName);

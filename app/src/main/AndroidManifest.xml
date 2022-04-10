@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.example.budgetplanning.roomdb.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,31 +25,31 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
-        <activity android:name=".TransactionEditActivity"/>
+        <activity android:name=".activities.TransactionEditActivity"/>
         <activity
-            android:name=".TransactionConstructorActivityTest"
+            android:name=".activities.TransactionConstructorActivityTest"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".FinancialAssetsActivity" />
-        <activity android:name=".AnalyticsExpenseRatioActivity" />
-        <activity android:name=".AnalyticsMainActivity" />
+        <activity android:name=".activities.FinancialAssetsActivity" />
+        <activity android:name=".activities.AnalyticsExpenseRatioActivity" />
+        <activity android:name=".activities.AnalyticsMainActivity" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".AnalyticsFoodBalanceActivity" />
+        <activity android:name=".activities.AnalyticsFoodBalanceActivity" />
         <activity
-            android:name=".QueryTransactionsActivity"
+            android:name=".activities.QueryTransactionsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TransactionConstructorActivity"
+            android:name=".activities.TransactionConstructorActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ShoppingListActivity"
+            android:name=".activities.ShoppingListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ProductConstructorActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.ProductConstructorActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,11 +1,10 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -21,8 +20,11 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.budgetplanning.utility.DateQueryHelper;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.entities.Transaction;
+import com.example.budgetplanning.adapters.TransactionAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 //QueryTransactionActivity is an Activity that allows user to generate 
 //database query for transactions based on date range and selected category

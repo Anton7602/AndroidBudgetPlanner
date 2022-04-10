@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.utility;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 //firebase database with date format yyyymmdd.
 public class DateQueryHelper {
 
-	DateQueryHelper() {
+	public DateQueryHelper() {
 
 	}
 	

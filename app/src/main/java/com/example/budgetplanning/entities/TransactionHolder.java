@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.entities;
 
 import java.util.ArrayList;
 

@@ -1,41 +1,21 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.common.util.IOUtils;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.roomdb.App;
+import com.example.budgetplanning.roomdb.LocalDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 
 
 //Main activity is a navigation main menu to the rest of th application
@@ -52,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindViews();
+        LocalDatabase localDatabase = App.getInstance().getLocalDatabase();
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() == null) {
             mAuth.signInWithEmailAndPassword("Strateg7602@gmail.com", "strat7602").addOnCompleteListener(new OnCompleteListener<AuthResult>() {

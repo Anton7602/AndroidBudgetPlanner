@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +20,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.budgetplanning.utility.DateQueryHelper;
+import com.example.budgetplanning.entities.Product;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.adapters.TransactionAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

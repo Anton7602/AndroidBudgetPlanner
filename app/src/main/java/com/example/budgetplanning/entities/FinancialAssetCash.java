@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.entities;
 
 public class FinancialAssetCash extends  FinancialAsset {
 
@@ -6,7 +6,7 @@ public class FinancialAssetCash extends  FinancialAsset {
 
     }
 
-    public FinancialAssetCash(double setRemainingAmount, String setCurrencyType) { 
+    public FinancialAssetCash(double setRemainingAmount, String setCurrencyType) {
         this.remainingAmount=setRemainingAmount;
         this.typeOfCurrency=setCurrencyType;
         this.typeOfAsset = "cash";

@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.entities;
 
 public class FinancialAssetCard extends FinancialAsset {
     private String lastDigitsOfNumber;

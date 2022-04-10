@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -27,6 +26,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.budgetplanning.utility.DateQueryHelper;
+import com.example.budgetplanning.entities.FinancialAsset;
+import com.example.budgetplanning.adapters.FinancialAssetAdapter;
+import com.example.budgetplanning.entities.FinancialAssetCard;
+import com.example.budgetplanning.entities.FinancialAssetCash;
+import com.example.budgetplanning.entities.Product;
+import com.example.budgetplanning.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -326,18 +332,18 @@ public class TransactionConstructorActivityTest extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onTouchEvent (MotionEvent event) {
-        if (this.mDetector.onTouchEvent(event)) {
-            if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-            else if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        }
-        return super.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent (MotionEvent event) {
+//        if (this.mDetector.onTouchEvent(event)) {
+//            if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//            }
+//            else if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//            }
+//        }
+//        return super.onTouchEvent(event);
+//    }
 
     class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override

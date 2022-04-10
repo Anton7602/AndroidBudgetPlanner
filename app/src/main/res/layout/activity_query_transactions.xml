@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentBottom="false"
     android:orientation="vertical"
-    tools:context=".QueryTransactionsActivity">
+    tools:context=".activities.QueryTransactionsActivity">
 
     <Button
         android:id="@+id/QTr_showTransactionDataBtn"

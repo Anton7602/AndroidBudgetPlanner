@@ -1,11 +1,12 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.roomdb;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import java.util.ArrayList;
+import com.example.budgetplanning.entities.Transaction;
+
 import java.util.List;
 
 @Dao

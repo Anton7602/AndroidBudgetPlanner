@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AnalyticsFoodBalanceActivity">
+    tools:context=".activities.AnalyticsFoodBalanceActivity">
 
     <TextView
         android:id="@+id/AFB_showPercentage"

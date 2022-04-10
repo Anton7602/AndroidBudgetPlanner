@@ -1,9 +1,8 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -23,6 +22,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.budgetplanning.utility.DateQueryHelper;
+import com.example.budgetplanning.entities.Product;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.entities.Transaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;

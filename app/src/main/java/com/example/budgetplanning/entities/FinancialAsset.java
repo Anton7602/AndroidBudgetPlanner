@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.entities;
 
 public class FinancialAsset {
     protected String typeOfAsset;

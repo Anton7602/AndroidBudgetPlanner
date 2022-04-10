@@ -1,4 +1,4 @@
-package com.example.budgetplanning;
+package com.example.budgetplanning.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.budgetplanning.utility.DateQueryHelper;
+import com.example.budgetplanning.R;
+import com.example.budgetplanning.entities.Transaction;
+import com.example.budgetplanning.entities.TransactionHolder;
+import com.example.budgetplanning.adapters.TransactionHolderAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
