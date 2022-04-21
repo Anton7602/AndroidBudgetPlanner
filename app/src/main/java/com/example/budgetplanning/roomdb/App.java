@@ -14,27 +14,50 @@ import com.google.firebase.database.ValueEventListener;
 
 public class App extends Application {
     public static App instance;
+    private static Boolean firebaseConnection;
 
     private LocalDatabase localDatabase;
+    private int numOfTransactionInFirebase;
+    private String keyOfLastTransactionInFirebase;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance=this;
-        localDatabase = Room.databaseBuilder(this, LocalDatabase.class, "localStorage").build();
+        localDatabase = Room.databaseBuilder(this, LocalDatabase.class, "localStorage").allowMainThreadQueries().build();
+        App.firebaseConnection = false;
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    Toast.makeText(getApplicationContext(), "Firebase is Online", Toast.LENGTH_SHORT).show();
-                    DatabaseReference transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
-                    transactionDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                firebaseConnection = snapshot.getValue(Boolean.class);
+                if (firebaseConnection == true) {
+                    final DatabaseReference transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
+                    transactionDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int numOfTransactionsInFirebase = (int) snapshot.getChildrenCount();
-                            Toast.makeText(getApplicationContext(), String.valueOf(numOfTransactionsInFirebase), Toast.LENGTH_SHORT).show();
+                            numOfTransactionInFirebase = (int) snapshot.getChildrenCount();
+                            transactionDatabase.orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
+                                        keyOfLastTransactionInFirebase = currentSnapshot.getKey();
+                                    }
+                                    transactionDatabase.removeEventListener(this);
+                                    Toast.makeText(getApplicationContext(), LocalDatabase.isDatabaseSynchronizedWithFirebase(numOfTransactionInFirebase,
+                                            keyOfLastTransactionInFirebase).toString(), Toast.LENGTH_LONG).show();
+                                    if (!LocalDatabase.isDatabaseSynchronizedWithFirebase(numOfTransactionInFirebase,
+                                            keyOfLastTransactionInFirebase)) {
+                                        LocalDatabase.ReplaceLocalDatabaseWithFirebaseData();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            transactionDatabase.removeEventListener(this);
                         }
 
                         @Override
@@ -42,22 +65,6 @@ public class App extends Application {
 
                         }
                     });
-                    transactionDatabase.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
-                                String keyOfLastTransactionInFirebase = currentSnapshot.getKey();
-                                Toast.makeText(getApplicationContext(), keyOfLastTransactionInFirebase, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                } else {
-                    Toast.makeText(getApplicationContext(), "Firebase is Offline", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -68,11 +75,9 @@ public class App extends Application {
     }
 
 
-    public static  App getInstance() {
-        return instance;
-    }
+    public static  App getInstance() {return instance;}
 
-    public LocalDatabase getLocalDatabase() {
-        return  localDatabase;
-    }
+    public static Boolean getFirebaseConnection() {return  firebaseConnection;}
+
+    public LocalDatabase getLocalDatabase() {return  localDatabase;    }
 }

@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class getExchangeRate extends AsyncTask<Void, Void, Void> {
+public class ExchangeRate extends AsyncTask<Void, Void, Void> {
     private static final String currentExchangeRateURL="https://www.cbr-xml-daily.ru/daily_json.js";
     private static final String archiveExchangeRateURL="https://www.cbr-xml-daily.ru/archive/YYYY/MM/DD/daily_json.js";
     private boolean exchangeRateReceived = false;
@@ -38,11 +38,11 @@ public class getExchangeRate extends AsyncTask<Void, Void, Void> {
         return exchangeRateReceived;
     }
 
-    public getExchangeRate() {
+    public ExchangeRate() {
 
     }
 
-    public getExchangeRate(int setYear, int setMonth, int setDay) {
+    public ExchangeRate(int setYear, int setMonth, int setDay) {
         this.year=setYear;
         this.month=setMonth;
         this.day=setDay;

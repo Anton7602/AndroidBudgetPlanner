@@ -26,4 +26,7 @@ public interface TransactionDAO {
 
     @Query("DELETE FROM `transaction`")
     void clearTable();
+
+    @Query("Select COUNT(*) From 'transaction'")
+    int getNumberOfTransactions();
 }

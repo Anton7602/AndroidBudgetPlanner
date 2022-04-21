@@ -1,5 +1,6 @@
 package com.example.budgetplanning.roomdb;
 
+import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,4 +21,36 @@ public abstract class LocalDatabase extends RoomDatabase {
     public abstract TransactionDAO getTransactionDAO();
     public  abstract  TransactionSyncStatusDAO getTransactionSyncStatusesDAO();
 
+    public static Boolean isDatabaseSynchronizedWithFirebase(int numberOfTransactionInFirebase, String keyOfLastTransactionInDatabase) {
+        LocalDatabase localDatabase = App.getInstance().getLocalDatabase();
+        TransactionDAO transactionDAO = localDatabase.getTransactionDAO();
+        return (keyOfLastTransactionInDatabase.equals(transactionDAO.getCurrentLastKey()) &&
+        numberOfTransactionInFirebase == transactionDAO.getNumberOfTransactions());
+    }
+
+    public static void SynchronizeDatabaseWithFirebase() {
+
+    }
+
+    public static void ReplaceLocalDatabaseWithFirebaseData() {
+        final DatabaseReference transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
+        LocalDatabase localDatabase = App.getInstance().getLocalDatabase();
+        final TransactionDAO transactionDAO = localDatabase.getTransactionDAO();
+        transactionDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot currentSnapshot : snapshot.getChildren()) {
+                    Transaction tempTransaction = currentSnapshot.getValue(Transaction.class);
+                    tempTransaction.setDbKey(currentSnapshot.getKey());
+                    transactionDAO.insert(tempTransaction);
+                }
+                transactionDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

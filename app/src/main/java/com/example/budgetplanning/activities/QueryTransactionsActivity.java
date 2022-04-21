@@ -20,7 +20,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.budgetplanning.roomdb.App;
 import com.example.budgetplanning.utility.DateQueryHelper;
 import com.example.budgetplanning.R;
 import com.example.budgetplanning.entities.Transaction;
@@ -69,6 +71,8 @@ public class QueryTransactionsActivity extends AppCompatActivity implements Adap
 	    setUpRecyclerViews();
 	    setUpSpinners();
 	    transactionDatabase = FirebaseDatabase.getInstance().getReference().child("Транзакции");
+
+	    Toast.makeText(getApplicationContext(), App.getFirebaseConnection().toString(), Toast.LENGTH_LONG).show();
 
 	    //Setting up date variables
         dateHelper = new DateQueryHelper();

@@ -16,7 +16,7 @@ import com.example.budgetplanning.adapters.FinancialAssetAdapter;
 import com.example.budgetplanning.entities.FinancialAssetCard;
 import com.example.budgetplanning.entities.FinancialAssetCash;
 import com.example.budgetplanning.R;
-import com.example.budgetplanning.utility.getExchangeRate;
+import com.example.budgetplanning.utility.ExchangeRate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +42,7 @@ public class FinancialAssetsActivity extends AppCompatActivity {
         bindViews();
         setUpRecyclerViews();
         sumOfAssets=0;
-        getExchangeRate currentExchangeRate = new getExchangeRate();
+        ExchangeRate currentExchangeRate = new ExchangeRate();
         currentExchangeRate.execute();
         int exchangeRateReceivingRuntime =0;
         try {
